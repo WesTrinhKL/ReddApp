@@ -27,6 +27,8 @@ app.use(session({
   saveUninitialized: false,
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
+app.use(logger('dev'));
 
 // set up session middleware
 const store = new SequelizeStore({ db: sequelize });
