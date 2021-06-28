@@ -3,7 +3,7 @@ const express = require('express');
 const db = require('../db/models');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const { loginUser } = require('../auth');
+const { loginUser, logoutUser } = require('../auth');
 
 
 const router = express.Router();
@@ -127,6 +127,19 @@ router.post('/login', csrfProtection, loginValidators,
       errors,
       csrfToken: req.csrfToken(),
     });
+  }));
+
+router.post('/logout', (req, res) => {
+  logoutUser(req, res);
+  res.redirect('/users/login');
+});
+
+router.get('/demo',((req, res) => {
+    const user = {
+      userId:1,
+    }
+    loginUser(req, res, user);
+    return res.redirect('/');
   }));
 
 
