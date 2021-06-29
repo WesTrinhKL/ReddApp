@@ -60,7 +60,7 @@ router.post('/sign-up', csrfProtection, userValidator, asyncHandler(async (req, 
 
   const user = db.User.build({
     username,
-  }); //heyy
+  });
 
   const validationErrors = validationResult(req);
   if (validationErrors.isEmpty()) {
