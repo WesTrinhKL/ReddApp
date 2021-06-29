@@ -8,9 +8,8 @@ block content
 
   div.post
       div.post-content-container
-          b=post.header
-        //- h3
-        //-   i=user.username
+        b=post.header
+
         +validationErrorSummary(errors)
 
         form(action='/posts/create-post' method='post')

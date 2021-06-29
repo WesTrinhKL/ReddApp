@@ -1,7 +1,7 @@
 mixin field(labelText, fieldName, fieldValue, multiline)
   div(class='form-group')
     label(for=fieldName)= labelText
-     if isMultiline
+     if multiline
          textarea(id=fieldName name=fieldName class='form-control' rows='5')= fieldValue
      else
          input(type=fieldType id=fieldName name=fieldName value=fieldValue class='form-control')
