@@ -40,7 +40,7 @@ const restoreUser = async (req, res, next) => {
 //used to protect routes. Requires auth to be true (session cookie stored)
 const requireAuth = (req, res, next) => {
   if (!res.locals.authenticated) {
-    return res.redirect('/user/login');
+    return res.redirect('/users/login');
   }
   return next();
 };

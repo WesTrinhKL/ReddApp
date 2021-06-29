@@ -1,0 +1,18 @@
+extends layout.pug
+
+include utils.pug
+
+block content
+
+    link(rel="stylesheet" href="/stylesheets/profile.css")
+    div
+        h1= Title
+        div.container
+
+            each post in allPosts
+                div.post-container
+                    div Header
+                        div= post.header
+                    div Content
+                        div= post.content
+                    hr
