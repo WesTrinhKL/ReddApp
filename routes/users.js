@@ -4,7 +4,7 @@ const db = require('../db/models');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const { requireAuth, loginUser, logoutUser, restoreUser } = require('../auth');
-
+const { Comment } = db;
 
 const router = express.Router();
 
@@ -60,7 +60,7 @@ router.post('/sign-up', csrfProtection, userValidator, asyncHandler(async (req, 
 
   const user = db.User.build({
     username,
-  }); //heyy
+  });
 
   const validationErrors = validationResult(req);
   if (validationErrors.isEmpty()) {
@@ -159,5 +159,29 @@ router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
   }
 
 }));
+
+router.get('/comments', (req, res, next) => {
+  const comment = db.Comment.build() //CREATE EMPTY USER INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
+  res.render('comment', {
+    title: 'user-comment',
+    comment,
+  })
+});
+
+router.post('/comments', asyncHandler(async (req, res) => {
+  const {
+    content,
+    userId,
+    postId,
+  } = req.body;
+
+  const comment = db.Comment.build({
+    content,
+    userId,
+    postId,
+  });
+    await comment.save();
+    res.redirect('/');
+}))
 
 module.exports = router;
