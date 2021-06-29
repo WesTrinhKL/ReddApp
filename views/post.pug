@@ -1,0 +1,18 @@
+extends layout.pug
+include utils.pug
+block content
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/profile.css")
+  //- add page specific js
+  //- script(src="/javascripts/index.js" type="module" defer)
+
+  div.post
+      div.post-content-container
+        b=post.header
+
+        +validationErrorSummary(errors)
+
+        form(action='/posts/create-post' method='post')
+            include post-form-fields.pug
+            div(class='py-4')
+            button(type='submit' class='btn btn-primary') Add Post

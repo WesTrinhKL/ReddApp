@@ -8,6 +8,7 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts');
 const { sessionSecret } = require('./config');
 const { restoreUser } = require('./auth');
 
@@ -19,20 +20,8 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(sessionSecret));
-app.use(session({
-  name: 'reading-list.sid',
-  secret: sessionSecret,
-  resave: false,
-  saveUninitialized: false,
-}));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: false }));
-app.use(logger('dev'));
-
-// set up session middleware
 const store = new SequelizeStore({ db: sequelize });
-
+store.sync();
 app.use(
   session({
     secret: 'superSecret',
@@ -40,13 +29,16 @@ app.use(
     saveUninitialized: false,
     resave: false,
   })
-);
+  );
+app.use(cookieParser(sessionSecret));
 
-// create Session table if it doesn't already exist
-store.sync();
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
+app.use(logger('dev'));
 app.use(restoreUser);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
