@@ -1,0 +1,49 @@
+body{
+  background-color: rgb(191, 220, 243);
+}
+
+.card {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color:white;
+  border-radius: .30rem;
+  width: 20%;    /* width always 40% of screen */
+  min-width: 20%;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.user-info-container {
+  padding: 2px 16px;
+}
+
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+}
+
+.container-card {
+
+  /* margin-left: 25%; */
+}
+
+.user-details__buttons{
+  width: 42%;
+  display:flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+
+.view-posts, .view-follow{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

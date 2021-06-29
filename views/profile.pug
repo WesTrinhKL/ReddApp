@@ -1,0 +1,21 @@
+extends layout.pug
+
+
+
+block content
+  append head
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/profile.css")
+  //- add page specific js
+  //- script(src="/javascripts/index.js" type="module" defer)
+  div.container-card
+    div.card
+      img(src='../images/default-profile-picture1.jpg' alt="profile img" style="width:100%")
+      div.user-info-container
+        h4
+          b=user.username
+          p.profession Software Engineer
+          p.location Los Angeles, CA
+          div.user-details__buttons
+            button.view-follow Follow
+            button.view-posts View Posts
