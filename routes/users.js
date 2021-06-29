@@ -3,7 +3,7 @@ const express = require('express');
 const db = require('../db/models');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const { loginUser, logoutUser } = require('../auth');
+const { requireAuth, loginUser, logoutUser, restoreUser } = require('../auth');
 
 
 const router = express.Router();
@@ -135,12 +135,29 @@ router.post('/logout', (req, res) => {
 });
 
 router.get('/demo',((req, res) => {
-    const user = {
-      userId:1,
-    }
-    loginUser(req, res, user);
-    return res.redirect('/');
-  }));
+  const user = {
+    id:1,
+  }
+  loginUser(req, res, user);
+  return res.redirect('/');
+}));
 
+router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
+  // console.log("local user", res.locals.user);
+  if (req.session.auth) {
+    const { userId } = req.session.auth;
+    const user = await db.User.findByPk(userId);
+
+    if (user) {
+      res.render('profile.pug', {
+        title: 'Profile Page',
+        user,
+      });
+    }
+  } else {
+    res.redirect('/users/login');
+  }
+
+}));
 
 module.exports = router;
