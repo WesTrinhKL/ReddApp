@@ -12,6 +12,8 @@ block content
                     div.post-title-preview
                         h2
                             a(href="/thisRouteGoesToTheSinglePostToView")=post.header
-                    div Content
-                        div= post.content
+                        div.content-preview
+                            p= post.content
+                        div.user-posted
+                            p=post.user.username
                     hr

@@ -36,7 +36,8 @@ router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req
 router.get('/feed', requireAuth, asyncHandler(async (req, res) => {
 
     const allPosts = await db.Post.findAll({
-        attributes: ['header', 'content']
+        attributes: ['header', 'content'],
+        include: {model: db.User, as: 'user'}
     })
     // console.log(allPosts)
     const user = res.locals.user
