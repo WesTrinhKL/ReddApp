@@ -1,9 +1,11 @@
 extends layout
 include utils.pug
 block content
-  form(action='/users/comments' method='post')
+  link(rel="stylesheet" href="/stylesheets/profile.css")
+  +validationErrorSummary(errors)
+  form(action='/posts/comments' method='post')
     div(class="user-comment-container")
-    +field("Comment: ", "content", comment.content)
+    +field("Comment: ", "content", comment.content, true)
     +field("userId: ", "userId", comment.userId)
     +field("postId: ", "postId", comment.postId)
     input(type="submit" value="Submit")
