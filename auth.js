@@ -16,10 +16,10 @@ const restoreUser = async (req, res, next) => {
   // to assist with debugging.
   console.log(req.session);
 
+  
   if (req.session.auth) {
     const { userId } = req.session.auth;
-
-    try {
+  try {
       const user = await db.User.findByPk(userId);
 
       if (user) {
@@ -40,7 +40,7 @@ const restoreUser = async (req, res, next) => {
 //used to protect routes. Requires auth to be true (session cookie stored)
 const requireAuth = (req, res, next) => {
   if (!res.locals.authenticated) {
-    return res.redirect('/user/login');
+    return res.redirect('/users/login');
   }
   return next();
 };

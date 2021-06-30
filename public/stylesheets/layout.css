@@ -1,0 +1,150 @@
+@font-face {
+  font-family: "Vibes";
+  src: url("fonts/GreatVibes-Regular.ttf");
+}
+@font-face {
+  font-family: "Ruhl";
+  src: url("fonts/FrankRuhlLibre-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Ruhl Medium";
+  src: url("fonts/FrankRuhlLibre-Medium.ttf");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  --header1: calc(2.5rem + 1vw);
+  --header2: calc(3.5rem + 1vw);
+  --header3: calc(3rem + 1vw);
+  --header4: calc(2.4rem + 1vw);
+  --text: calc(1.5rem + 0.5vw);
+  --big: calc(8rem + 1vw);
+  --special-color: #906272;
+  --background-color: #414141;
+  --grey-text: #525252;
+}
+
+li,
+button,
+label,
+input,
+p,
+a {
+  font-size: var(--text);
+}
+
+h1 {
+  font-size: var(--header1);
+  font-family: "Vibes", sans-serif;
+}
+h2 {
+  font-size: var(--header2);
+}
+
+h3 {
+  font-size: var(--header3);
+}
+
+/* --------navbar------ */
+
+
+header * {
+  color: #2B4F60;
+}
+
+header ul {
+  float: right;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+header ul li {
+  float: left;
+  position: relative;
+}
+
+
+header ul li a:hover {
+  background: #9c857e;
+  transition: 0.3s;
+}
+
+
+.remove-underline {
+  text-decoration: none;
+
+}
+
+.main-head {
+  box-shadow: 2px 11px 11px rgba(10, 9, 9, 0.1);
+  background-color: rgb(177, 104, 104);
+  z-index: 5;
+  position: sticky;
+  top: 0;
+}
+
+header ul li a {
+  display: block;
+  padding: 21px;
+  font-size: 1.1em;
+  text-decoration: none;
+}
+
+nav {
+  /* width: 85%; */
+  margin: auto;
+  display: flex;
+  align-items: center;
+  min-height: 8vh;
+  padding: 2rem 1;
+  background-color: #EAD3CB;
+  justify-content: space-between;
+}
+
+.navbar__home {
+  flex: 2 0 20rem;
+  font-family: "Vibes", sans-serif;
+  text-decoration: none;
+  color: #845460;
+  font-weight: bold;
+  margin-left: 50px;
+  font-size: var(--header1);
+}
+.navbar__home--second-word{
+  color: #2B4F60;
+}
+
+.navbar__home a {
+  font-size: medium;
+
+
+}
+.navbar__links{
+  display: flex;
+  /* justify-content: space-around; */
+  /* flex: 1 1 10rem; */
+  margin-right: 30px;
+}
+
+.navbar__links a {
+  font-size: large;
+}
+
+.navbar__message{
+  font-family: "Vibes", sans-serif;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.spacing-icon{
+  margin-right: 10px;
+}
