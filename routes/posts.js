@@ -7,7 +7,10 @@ const db = require('../db/models');
 const router = express.Router();
 const { Comment } = db;
 
+router.get('/', csrfProtection, asyncHandler(async (req, res) => {
+    res.redirect('/posts/feed')
 
+}))
 
 router.get('/create-post', csrfProtection, asyncHandler(async (req, res) => {
 
@@ -36,19 +39,26 @@ router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req
     }
 }));
 
-router.get('/feed', requireAuth, asyncHandler(async (req, res) => {
+router.get('/feed', asyncHandler(async (req, res) => {
 
     const allPosts = await db.Post.findAll({
         attributes: ['header', 'content'],
         include: {model: db.User, as: 'user'}
     })
-    // console.log(allPosts)
+
     const user = res.locals.user
-    console.log("my-user", user)
+
+    if(req.session.auth) {
         res.render('feed', {
             Title: `${user.username} Feed`,
             allPosts,
         })
+    } else {
+        res.render('feed', {
+            Title: 'Global Feed',
+            allPosts,
+        })
+    }
 }
 ));
 
