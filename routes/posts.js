@@ -7,7 +7,10 @@ const db = require('../db/models');
 const router = express.Router();
 const { Comment } = db;
 
+router.get('/', csrfProtection, asyncHandler(async (req, res) => {
+    res.redirect('/posts/feed')
 
+}))
 
 router.get('/create-post', csrfProtection, asyncHandler(async (req, res) => {
 
@@ -36,32 +39,63 @@ router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req
     }
 }));
 
-router.get('/feed', requireAuth, asyncHandler(async (req, res) => {
+router.get('/feed', asyncHandler(async (req, res) => {
 
     const allPosts = await db.Post.findAll({
         attributes: ['header', 'content'],
-        include: {model: db.User, as: 'user'}
+        include: { model: db.User, as: 'user' }
     })
-    // console.log(allPosts)
+    // allPosts.forEach(post => {
+    //     console.log(post.id)
+    // })
     const user = res.locals.user
-    console.log("my-user", user)
+
+    if (req.session.auth) {
         res.render('feed', {
             Title: `${user.username} Feed`,
             allPosts,
         })
+    } else {
+        res.render('feed', {
+            Title: 'Global Feed',
+            allPosts,
+        })
+    }
 }
 ));
 
+router.get("/feed/:id(\\d+)", asyncHandler(async (req, res) => {
+
+    const postId = parseInt(req.params.id, 10);
+    console.log(postId)
+    const post = await db.Post.findByPk(postId);
+    console.log(post)
+    res.render("one-post", {
+        post
+    });
+}));
+
+// router.post("/feed//:id(\\d+)", csrfProtection, asyncHandler(async (req, res) => {
+//     console.log('white space')
+//     // const postId = parseInt(req.params.id, 10);
+//     // console.log(postId);
+//     // const post = await db.Post.findByPk(postId);
+//     // res.render("one-post"
+//     // post,
+//     // csrfToken: req.csrfToken(),
+
+// }));
+
 const commentValidator = [
     check('content')
-      .exists({ checkFalsy:true })
-      .withMessage('Please provide value for the Comment field.')
-      .isLength({ max: 255 })
-      .withMessage('Comment cannot be more than 255 characters long')
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide value for the Comment field.')
+        .isLength({ max: 255 })
+        .withMessage('Comment cannot be more than 255 characters long')
 ];
 
 router.get('/comments', requireAuth, asyncHandler(async (req, res, next) => {
-    if(req.session.auth){
+    if (req.session.auth) {
         const comment = db.Comment.build() //CREATE EMPTY USER INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
         res.render('comment', {
             title: 'user-comment',
@@ -87,7 +121,7 @@ router.post('/comments', commentValidator, asyncHandler(async (req, res) => {
     });
 
     const validationErrors = validationResult(req);
-    if(validationErrors.isEmpty()){
+    if (validationErrors.isEmpty()) {
         await comment.save();
         res.redirect('/');
     } else {

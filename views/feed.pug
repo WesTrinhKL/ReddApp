@@ -6,12 +6,12 @@ block content
 
     //- link(rel="stylesheet" href="/stylesheets/feed.css")
     div.content-container
-        h1.title Current Posts
+        h1.title Latest Posts
             each post in allPosts
                 div.post-container
                     div.post-title-preview
                         h3
-                            a(href="/thisRouteGoesToTheSinglePostToView")=post.header
+                            a(style="color: #f0ad8e", href=`/posts/feed/${post.id}`)= post.header
                         div.content-preview
                             h2= post.content
                         div.user-posted
