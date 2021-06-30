@@ -33,6 +33,7 @@ store.sync();
 
 app.use(session({
   secret: sessionSecret,
+  store,
   resave: false,
   saveUninitialized: false,
 }));
