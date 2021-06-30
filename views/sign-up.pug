@@ -6,11 +6,11 @@ block content
   +validationErrorSummary(errors)
   form(action='/users/sign-up' method='post')
     input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Username', 'username', user.username)
-    +field('Password', 'password', user.password, 'password')
-    +field('Confirm Password', 'confirmPassword', '', 'password')
+    +field-signup('Username', 'username', user.username)
+    +field-signup('Password', 'password', user.password, 'password')
+    +field-signup('Confirm Password', 'confirmPassword', '', 'password')
     div(class='py-4')
-      button(type='submit' class='btn btn-primary') Register
+      button(type='submit' class='btn btn-primary') Sign-Up
       a(href='/' class='btn btn-warning ml-2') Cancel
   div
     p: a(href='/users/login') Already have an account?

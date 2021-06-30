@@ -16,10 +16,10 @@ const restoreUser = async (req, res, next) => {
   // to assist with debugging.
   console.log(req.session);
 
+  
   if (req.session.auth) {
     const { userId } = req.session.auth;
-
-    try {
+  try {
       const user = await db.User.findByPk(userId);
 
       if (user) {

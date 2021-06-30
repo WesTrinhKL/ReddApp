@@ -22,20 +22,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const store = new SequelizeStore({ db: sequelize });
 store.sync();
-app.use(
-  session({
-    secret: 'superSecret',
-    store,
-    saveUninitialized: false,
-    resave: false,
-  })
-  );
-app.use(cookieParser(sessionSecret));
+// app.use(
+//   session({
+//     secret: 'superSecret',
+//     store,
+//     saveUninitialized: false,
+//     resave: false,
+//   })
+//   );
 
+app.use(session({
+  secret: sessionSecret,
+  resave: false,
+  saveUninitialized: false,
+}));
+
+app.use(cookieParser(sessionSecret));
+  
+app.use(restoreUser);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
-app.use(restoreUser);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);

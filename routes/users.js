@@ -68,7 +68,7 @@ router.post('/sign-up', csrfProtection, userValidator, asyncHandler(async (req, 
     user.hashedPassword = hashedPassword;
     await user.save();
     loginUser(req, res, user);
-    res.redirect('/');
+    res.redirect('/users/profile');
   } else {
     const errors = validationErrors.array().map((error) => error.msg);
     res.render('sign-up', {
@@ -113,7 +113,7 @@ router.post('/login', csrfProtection, loginValidators,
         const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
         if (passwordMatch) {
           loginUser(req, res, user);
-          return res.redirect('/');
+          return res.redirect('/posts/feed');
         }
       }
       errors.push('Login failed for the provided username and password');
@@ -139,7 +139,7 @@ router.get('/demo',((req, res) => {
     id:1,
   }
   loginUser(req, res, user);
-  return res.redirect('/');
+  return res.redirect('/posts/feed');
 }));
 
 router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
@@ -159,29 +159,5 @@ router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
   }
 
 }));
-
-router.get('/comments', (req, res, next) => {
-  const comment = db.Comment.build() //CREATE EMPTY USER INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
-  res.render('comment', {
-    title: 'user-comment',
-    comment,
-  })
-});
-
-router.post('/comments', asyncHandler(async (req, res) => {
-  const {
-    content,
-    userId,
-    postId,
-  } = req.body;
-
-  const comment = db.Comment.build({
-    content,
-    userId,
-    postId,
-  });
-    await comment.save();
-    res.redirect('/');
-}))
 
 module.exports = router;

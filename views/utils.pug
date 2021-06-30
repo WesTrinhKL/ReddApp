@@ -20,3 +20,8 @@ mixin validationErrorSummary(errors)
                 ul
                     each error in errors
                         li= error
+
+mixin field-signup(labelText, fieldName, fieldValue, fieldType = 'text')
+  div(class='form-group')
+    label(for=fieldName)= labelText
+    input(type=fieldType id=fieldName name=fieldName value=fieldValue class='form-control')
