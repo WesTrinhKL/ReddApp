@@ -10,10 +10,11 @@ block content
             each post in allPosts
                 div.post-container
                     div.post-title-preview
-                        h2
+                        h3
                             a(href="/thisRouteGoesToTheSinglePostToView")=post.header
                         div.content-preview
-                            p= post.content
+                            h2= post.content
                         div.user-posted
-                            p=post.user.username
+                            p(post-container__user-font) posted by user:
+                                span #{post.user.username}
                     hr
