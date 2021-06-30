@@ -5,14 +5,13 @@ include utils.pug
 block content
 
     //- link(rel="stylesheet" href="/stylesheets/feed.css")
-    div
-        h1= Title
-        div.container
-
+    div.content-container
+        h1.title Current Posts
             each post in allPosts
                 div.post-container
-                    div Header
-                        div= post.header
+                    div.post-title-preview
+                        h2
+                            a(href="/thisRouteGoesToTheSinglePostToView")=post.header
                     div Content
                         div= post.content
                     hr
