@@ -134,10 +134,8 @@ router.get('/logout', (req, res) => {
   res.redirect('/users/login');
 });
 
-router.get('/demo',((req, res) => {
-  const user = {
-    id:1,
-  }
+router.get('/demo', (async (req, res) => {
+  const user = await db.User.findByPk(1);
   loginUser(req, res, user);
   res.redirect('/');
 }));
