@@ -72,10 +72,6 @@ header ul li {
 }
 
 
-header ul li a{
-  display:block;
-}
-
 header ul li a:hover {
   background: #9c857e;
   transition: 0.3s;
@@ -95,6 +91,13 @@ header ul li a:hover {
   top: 0;
 }
 
+header ul li a {
+  display: block;
+  padding: 21px;
+  font-size: 1.1em;
+  text-decoration: none;
+}
+
 nav {
   /* width: 85%; */
   margin: auto;
@@ -103,7 +106,7 @@ nav {
   min-height: 8vh;
   padding: 2rem 1;
   background-color: #EAD3CB;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .navbar__home {
@@ -126,8 +129,8 @@ nav {
 }
 .navbar__links{
   display: flex;
-  justify-content: space-around;
-  flex: 1 1 10rem;
+  /* justify-content: space-around; */
+  /* flex: 1 1 10rem; */
   margin-right: 30px;
 }
 
@@ -142,6 +145,6 @@ nav {
   text-overflow: ellipsis;
 }
 
-.profile-icon, .logout-icon{
+.spacing-icon{
   margin-right: 10px;
 }

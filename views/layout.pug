@@ -15,8 +15,9 @@ html
 
     header(class='main-nav')
       nav(class='navbar')
-        a(class='navbar__home' href='/') Red
-          span(class='navbar__home--second-word') App
+        div
+          a(class='navbar__home' href='/') Red
+            span(class='navbar__home--second-word') App
         ul(class='navbar__links')
           if locals.authenticated
             li
@@ -25,17 +26,25 @@ html
               span()
             li(class='')
               a(class='navbar__profile-button remove-underline' href='/users/profile')
-                <i class="fas fa-user profile-icon"></i>
+                <i class="fas fa-user spacing-icon"></i>
                 span #{user.username}
             li
               a(class='navbar__logout-button remove-underline' href='/users/logout')
-                  <i class="fas fa-sign-out-alt logout-icon"></i>
+                  <i class="fas fa-sign-out-alt spacing-icon"></i>
                   span Logout
           else
-            span(class='navbar-text px-4')
-              a(class='btn btn-sm btn-dark mr-2' href='/users/login') Login
-              a(class='btn btn-sm btn-dark' href='/users/sign-up') Sign Up
-              a(class='btn btn-sm btn-dark mr-2' href='/users/demo') Demo
+            li(class='')
+              a(class='navbar__log-in-button remove-underline' href='/users/login')
+                <i class="fas fa-sign-in-alt spacing-icon"></i>
+                span Log In
+            li(class='')
+              a(class='navbar__sign-up-button remove-underline' href='/users/sign-up')
+                <i class="fas fa-user-plus spacing-icon"></i>
+                span Sign Up
+            li
+              a(class='navbar__demo-button remove-underline' href='/users/demo')
+                  <i class="fas fa-id-card-alt spacing-icon"></i>
+                  span Demo
     .container
         h2(class='py-4') #{title}
         block content
