@@ -1,10 +1,10 @@
-const { csrfProtection, asyncHandler } = require('./utils');
 const express = require('express');
-const db = require('../db/models');
+const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
-const { requireAuth, loginUser, logoutUser, restoreUser } = require('../auth');
-const router = express.Router();
+const { requireAuth } = require('../auth');
 
+const db = require('../db/models');
+const router = express.Router();
 
 router.get('/create-post', csrfProtection, asyncHandler(async (req, res) => {
 
@@ -38,9 +38,9 @@ router.get('/feed', requireAuth, asyncHandler(async (req, res) => {
     const allPosts = await db.Post.findAll({
         attributes: ['header', 'content']
     })
-    console.log(allPosts)
-    const user = res.locals.user.id
-    console.log(user)
+    // console.log(allPosts)
+    const user = res.locals.user
+    console.log("my-user", user)
         res.render('feed', {
             Title: `${user.username} Feed`,
             allPosts,
@@ -49,23 +49,5 @@ router.get('/feed', requireAuth, asyncHandler(async (req, res) => {
 ));
 
 
-// const validatorErrors = validationResult(req);
-// if (validatorErrors.isEmpty()) {
-//     await post.save();
-//     res.redirect('/create-post');
-// } else {
-//     const errors = validatorErrors.array().map((error) => error.msg);
-//     res.render('post', {
-//         title: 'Add Post',
-//         post,
-//         errors,
-//         csrfToken: req.csrfToken(),
-//     });
-// }
-
-
-
 
 module.exports = router
-
-// router.post('/', csrfProtection, asyncHandler(async (req, res, next) => {

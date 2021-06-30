@@ -139,7 +139,7 @@ router.get('/demo',((req, res) => {
     id:1,
   }
   loginUser(req, res, user);
-  return res.redirect('/');
+  res.redirect('/');
 }));
 
 router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
