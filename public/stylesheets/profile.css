@@ -1,3 +1,5 @@
+
+
 body{
   background-color: #DAE0E6;
 }
@@ -11,8 +13,8 @@ body{
   grid-template-areas:
   /* "header header" */
   "profile posts"
-  "socials posts"
-  "skills posts";
+  "skills posts"
+  "socials posts";
   grid-template-columns: 1fr 2fr;
   grid-template-rows: auto;
   gap: 15px;
@@ -27,7 +29,9 @@ body{
 .grid-item-posts{
   grid-area: posts;
 }
-
+.grid-item-skills{
+  grid-area: skills;
+}
 /* ---profile-card--- */
 
 .card {
@@ -117,7 +121,7 @@ body{
 /* ---socials---- */
 .social-items{
   width: 90%;
-  margin: 5px auto;
+  margin: 7px auto;
   display:flex;
   flex-direction: column;
   background-color: rgb(255, 255, 255);
@@ -186,4 +190,72 @@ body{
   width: 100%;
   min-width: 20%;
   height: 100%;
+}
+
+.user-title{
+  font-size: var(--header4);
+  padding: 5px 0 0 35px;
+  color: #27394e;
+  font-weight: bold;
+}
+
+.posts-hr{
+  width: 90%;
+  margin: 0 auto;
+  color: gray
+}
+
+.post-outline{
+  margin:20px auto 20px auto;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  background-color:white;
+  border-radius: .30rem;
+  width: 90%;
+  min-width: 20%;
+  height: 100%;
+}
+
+/* ---skills--- */
+.user-skills {
+  margin:5px auto 0 auto;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  background-color:white;
+  border-radius: .30rem;
+  width: 90%;
+  min-width: 20%;
+  /* height: 150px; */
+}
+
+.user-skills-title{
+  font-size: Medium;
+  padding: 5px 0 0 0;
+  color: #27394e;
+  font-weight: bold;
+  width:90%;
+  margin: 5px auto 0 auto;
+  border-bottom: 2px solid #27394e;
+}
+
+.user-skills-items{
+  display: flex;
+  /* justify-content: space-around; */
+  flex-wrap: wrap;
+  width: 90%;
+  margin: 5px auto 10px auto;
+}
+
+.skill-item{
+  font-size: small;
+  font-family: sans-serif;
+  /* border: 1px solid black; */
+  font-weight: bold;
+  padding:5px;
+  margin: 5px;
+  color: white;
+  background-color: #8b4b4b;
+  border-radius: 5px;
 }
