@@ -7,12 +7,11 @@ block content
 
     div.post-container
         p
-            i=`Posted by user ${user.username} `
+            i=`Posted by user ${user.username}`
         div.header
             h1=post.header
         div.content
             p=post.content
         div.comment
-            textarea
-        button.like Like
-        button(type=submit) Reply
+            textarea(id='textarea-comment')
+        button(type=submit) Submit Comment
