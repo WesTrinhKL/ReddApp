@@ -17,7 +17,8 @@ block content
                         div.user-posted
                             p(post-container__user-font) posted by user:
                                 span #{post.user.username}
-                                    button.edit
+                                br
+                                a(href=`/posts/feed/${post.id}/edit`)
                                         i Edit
                     hr
                 div.buttons

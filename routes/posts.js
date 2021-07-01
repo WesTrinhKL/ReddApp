@@ -166,13 +166,35 @@ router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res)
     }
 }))
 
-// router.get('/feed/edit/:id(\\d+)'), requireAuth, asyncHandler (async (req, res) => {
-//     res.render('edit-posts')
-// })
+router.get('/feed/:id(\\d+)/edit', csrfProtection, requireAuth, asyncHandler (async (req, res) => {
 
-// router.post('/feed/edit/:id(\\d+)'), requireAuth, asyncHandler (async (req, res) => {
+    const postId = parseInt(req.params.id, 10)
+    const post = await db.Post.findByPk(postId)
+    if(req.session.auth) {
+       const { userId } = req.session.auth;
+       const user = await db.User.findByPk(userId);
+       res.render('edit-posts', {
+           title: "Edit Post",
+           post,
+           csrfToken: req.csrfToken(),
+       })
+    }
+}))
 
-// })
+router.post('/feed/:id(\\d+)/edit', csrfProtection, commentValidator, asyncHandler (async (req, res) => {
+    const postId = parseInt(req.params.id, 10)
+    const post = await db.Post.findByPk(postId)
+    const { userId } = req.session.auth;
+    const user = await db.User.findByPk(userId);
+
+    if(postId == userId) {
+        res.render('edit-posts', {
+            title: "Edit Post",
+            post,
+            csrfToken: req.csrfToken(),
+        })
+    }
+}))
 
 
 
