@@ -1,0 +1,82 @@
+/* general global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.input-field{
+  background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 30%;
+  margin-left: 10%;
+}
+
+/* errors styling */
+.error-group{
+  margin-left: 10%;
+  color: rgb(230, 63, 63);
+}
+
+.error-group ul{
+  list-style: none;
+}
+
+.error-group ul li{
+  padding: 5px 0px;
+}
+
+/* login container */
+.sign-in-title{
+  font-weight: bold;
+  margin-left: 20%;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 8%;
+}
+
+.login-container {
+  background: linear-gradient(
+      110deg,
+      rgb(150, 200, 206) 0%,
+      rgba(151, 214, 219, 0.70) 50%,
+      transparent 50%
+    ),
+    url("../images/webcampers2.jpg") center center no-repeat;
+  background-size: cover;
+  height: 700px;
+
+}
+
+/* login button */
+.login-button-container{
+
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.login-button {
+  padding: 1rem 5rem;
+  background: #4c6e97;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  width: 30%;
+  margin-left: 10%;
+  padding: 12px 0;
+}
+
+.login-button:hover {
+  background: #27394e;
+}
+
+.go-to-signup{
+  margin-left: 10%;
+  margin-top: 10px;
+
+}
