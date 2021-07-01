@@ -1,25 +1,31 @@
 body{
-  background-color: #BDC7C9;
+  background-color: #DAE0E6;
 }
 
+/* ---profile-card--- */
+
+
 .card {
+  margin-top:50px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  position: relative;
   display: flex;
   flex-direction: column;
   background-color:white;
   border-radius: .30rem;
-  width: 20%;    /* width always 40% of screen */
+  width: 20%;
   min-width: 20%;
   overflow: hidden;
 }
 
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+.profile-image{
+  padding-top: 25px;
+  border-radius: 50%;
+  margin: auto;
+  width: 40%;
 }
 
-.user-info-container {
-  padding: 2px 16px;
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 
@@ -34,16 +40,33 @@ body{
   /* margin-left: 25%; */
 }
 
-.user-details__buttons{
-  width: 42%;
-  display:flex;
-  justify-content: space-between;
-  flex-flow: row wrap;
+/* ---profile-card__user-info--- */
+.user-info-container {
+  padding: 2px 16px;
 }
 
+.user-info-container__details{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-.view-posts, .view-follow{
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.user-details__buttons{
+  display:flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.view-follow{
+  /* padding: 1rem 5rem; */
+  background: #4c6e97;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  width: 40%;
+  margin-top: 10px;
+  padding: 6px 4px;
+  border-radius: 8%;
 }

@@ -8,14 +8,15 @@ block content
   link(rel="stylesheet" href="/stylesheets/profile.css")
   //- add page specific js
   //- script(src="/javascripts/index.js" type="module" defer)
-  div.container-card
-    div.card
-      img(src='../images/default-profile-picture1.jpg' alt="profile img" style="width:100%")
-      div.user-info-container
-        h4
-          b=user.username
-          p.profession Software Engineer
-          p.location Los Angeles, CA
+  header
+  main
+    div.container-card
+      div.card
+        img(class='profile-image' src='../images/default-profile-picture1.jpg' alt="profile img")
+        div.user-info-container
+          div.user-info-container__details
+            div=user.username
+            div.profession Software Engineer
+            div.location Los Angeles, CA
           div.user-details__buttons
             button.view-follow Follow
-            button.view-posts View Posts
