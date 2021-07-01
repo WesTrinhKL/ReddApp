@@ -1,3 +1,14 @@
+
+@font-face {
+  font-family: "Ruhl";
+  src: url("fonts/FrankRuhlLibre-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Ruhl Medium";
+  src: url("fonts/FrankRuhlLibre-Medium.ttf");
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

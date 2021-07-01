@@ -1,0 +1,42 @@
+extends layout.pug
+
+include utils.pug
+block content
+  div(class="comment-thread")
+    div(class="comment" id=`post-${postId}`)
+      div(class="comment-heading")
+        div(class="comment-voting")
+          button(type="button")
+            span(aria-hidden="true") &#9650
+            span(class="sr-only") Vote Up 
+          button(type="button")
+            span(aria-hidden="true") &#9660
+            span(class="sr-only") Vote Down 
+        div(class="comment-info")
+          a(href="#" class="comment-author")=user.username
+          p(class="m-0") 2 Likes &bull; 4 days ago
+      div(class="comment-body")
+        p=post.header
+        p=post.content
+      //-   button(type="button") reply 
+      //- div(class="replies")
+      //-   div(class="comment" id=`comment-${comment.id}`)
+      //-     div(class="comment-voting")
+      //-       button(type="button")
+      //-         span(aria-hidden="true") &#9650
+      //-         span(class="sr-only") Vote Up 
+      //-       button(type="button")
+      //-         span(aria-hidden="true") &#9660
+      //-         span(class="sr-only") Vote Down 
+
+             
+
+
+
+  link(rel="stylesheet" href="/stylesheets/comments.css")
+  +validationErrorSummary(errors)
+  form(action=`/posts/feed/${postId}/create-comment` method='post')
+    +field("Comment: ", "content", comment.content, false)
+    input(type='hidden' name='userId' value=userId)
+    input(type='hidden' name='postId' value=postId)
+    input(type="submit" value="Submit")
