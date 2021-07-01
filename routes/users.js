@@ -155,7 +155,24 @@ router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
   } else {
     res.redirect('/users/login');
   }
-
 }));
+
+router.get('/profile/:id', requireAuth, asyncHandler(async (req, res) => {
+  // console.log("local user", res.locals.user);
+    const { userId } = req.params.id;
+    const user = await db.User.findByPk(userId);
+
+    if (user) {
+      res.render('profile.pug', {
+        title: 'Profile Page',
+        user,
+      });
+    }
+  } else {
+    res.redirect('/users/login');
+  }
+}));
+
+
 
 module.exports = router;

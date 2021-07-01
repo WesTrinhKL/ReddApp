@@ -19,7 +19,8 @@ block content
             div.profession Software Engineer
             div.location Los Angeles, CA
           div.user-details__buttons
-            button.follow-button Follow
+            if locals.authenticated
+            button.follow-button.can-follow Follow
     div.socials-container.grid-item-socials
       //- for each social of user in db, render template of data
       div.socials-flex-container
