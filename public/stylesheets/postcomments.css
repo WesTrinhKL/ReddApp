@@ -1,0 +1,12 @@
+body {
+  background: #ccc;
+}
+.wrap {
+  width: 300px;
+  margin: 0 auto;
+  background: white;
+}
+table {
+  border: 1px solid red;
+  margin: 5px 0;
+}

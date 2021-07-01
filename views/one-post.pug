@@ -1,7 +1,17 @@
 extends layout.pug
 include utils.pug
 
+
 block content
 
-    div.container
-        h1 HELLOOOO
+
+    div.post-container
+        p
+            i=`Posted by user ${user.username}`
+        div.header
+            h1=post.header
+        div.content
+            p=post.content
+        div.comment
+            textarea(id='textarea-comment')
+        button(type=submit) Submit Comment
