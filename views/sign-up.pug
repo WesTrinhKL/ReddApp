@@ -10,7 +10,7 @@ block content
   div(class='signup-container')
     h2(class='sign-up-title') Sign Up
     +validationErrorSummary(errors)
-    form(action='/users/sign-up' method='post')
+    form(class="flex-input" action='/users/sign-up' method='post')
       input(type='hidden' name='_csrf' value=csrfToken)
       +fieldLoginSignup('Username', 'username', username, false )
       +fieldLoginSignup('Password', 'password', null, 'password', false )

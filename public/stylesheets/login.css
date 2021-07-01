@@ -51,14 +51,24 @@
 
 .login-container {
   background: linear-gradient(
-      110deg,
-      rgb(150, 200, 206) 0%,
-      rgba(151, 214, 219, 0.70) 50%,
-      transparent 50%
+    70deg,
+
+    rgb(150, 200, 206, 0.70) 50%,
+    rgba(151, 214, 219) 50%,
+    transparent 50%
     ),
     url("../images/webcampers2.jpg") center center no-repeat;
   background-size: cover;
   height: 755px;
+  /* background: linear-gradient(
+      110deg,
+      rgb(150, 200, 206) 0%,
+      rgba(151, 214, 219, 0.70) 0%,
+      transparent 50%
+    ),
+    url("../images/webcampers2.jpg") center center no-repeat;
+  background-size: cover;
+  height: 755px; */
 
 }
 
@@ -92,12 +102,14 @@
   margin-left: 10%;
   margin-top: 10px;
   font-size: medium;
+  font-weight: bold;
 }
 
 .go-to-signup a {
   font-size: medium;
   text-decoration: none;
   color: #845460;
+  font-weight: bold;
 }
 
 /* form 0px to 600px apply these styles */
