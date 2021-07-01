@@ -73,8 +73,6 @@ router.get("/feed/:id(\\d+)", requireAuth, csrfProtection, asyncHandler(async (r
     if (req.session.auth) {
         const { userId } = req.session.auth;
         const user = await db.User.findByPk(userId);
-
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', `${user.username}`)
     }
     res.render("one-post", {
         Title: 'User\'s Post',
@@ -105,10 +103,17 @@ const commentValidator = [
 
 router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (req, res, next) => {
     if (req.session.auth) {
+        const postId = parseInt(req.params.id, 10);
+        const post = await db.Post.findByPk(postId);
+        const userId = req.session.auth.userId
+        
         const comment = db.Comment.build() //CREATE EMPTY USER INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
         res.render('create-comment', {
-            title: 'user-comment',
+            title: '',
             comment,
+            postId,
+            userId,
+            post
         })
     } else {
         res.redirect('/')
@@ -128,11 +133,11 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
         userId,
         postId,
     });
-
+    
     const validationErrors = validationResult(req);
     if (validationErrors.isEmpty()) {
         await comment.save();
-        res.redirect('/');
+        res.redirect(`/posts/feed/${postId}/comments`);
     } else {
         const errors = validationErrors.array().map((error) => error.msg);
         res.render('create-comment', {
@@ -143,6 +148,22 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
     }
 }))
 
+router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res) => {
+    const allComments = await db.Comment.findAll({
+        attributes: ['id', 'content', 'userId', 'postId'],
+        include: { model: db.User, as: 'user' },
+    })
+
+    const user = res.locals.user
+    if (req.session.auth) {
+        res.render('comment', {
+            Title: `${user.username} Comments`,
+            allComments,
+        })
+    } else {
+        res.redirect('/');
+    }
+}))
 
 
 module.exports = router

@@ -20,8 +20,4 @@ block content
                     hr
                 div.buttons
                     button(id=`like-${post.id}`) Like 
-                    button(id=`comment-${post.id}` onclick=`move(${post.id})`) Comment
-                script.
-                    function move(id) {
-                        window.location.href=`${window.location.href}/${id}`
-                    }
+                    a(id=`comment-${post.id}` href=`/posts/feed/${post.id}/create-comment`) Comment
