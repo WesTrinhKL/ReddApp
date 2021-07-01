@@ -15,7 +15,7 @@ body{
 
 html {
   font-size: 62.5%;
-  --header1: calc(2.5rem + 1vw);
+  --header1: calc(1.5rem + 1vw);
   --header2: calc(3.5rem + 1vw);
   --header3: calc(3rem + 1vw);
   --header4: calc(2.4rem + 1vw);
