@@ -1,0 +1,12 @@
+extends one-post
+include utils.pug
+block content
+  link(rel="stylesheet" href="/stylesheets/profile.css")
+  +validationErrorSummary(errors)
+  form(action='/posts/comments' method='post')
+    div(class="user-comment-container")
+    +field("Comment: ", "content", comment.content, true)
+    +field("userId: ", "userId", comment.userId)
+    +field("postId: ", "postId", comment.postId)
+    input(type="submit" value="Submit")
+  div(class="comments")

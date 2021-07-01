@@ -103,10 +103,10 @@ const commentValidator = [
         .withMessage('Comment cannot be more than 255 characters long')
 ];
 
-router.get('/comments', requireAuth, asyncHandler(async (req, res, next) => {
+router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (req, res, next) => {
     if (req.session.auth) {
         const comment = db.Comment.build() //CREATE EMPTY USER INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
-        res.render('comment', {
+        res.render('create-comment', {
             title: 'user-comment',
             comment,
         })
@@ -116,7 +116,7 @@ router.get('/comments', requireAuth, asyncHandler(async (req, res, next) => {
 
 }));
 
-router.post('/comments', commentValidator, asyncHandler(async (req, res) => {
+router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(async (req, res) => {
     const {
         content,
         userId,
@@ -135,7 +135,7 @@ router.post('/comments', commentValidator, asyncHandler(async (req, res) => {
         res.redirect('/');
     } else {
         const errors = validationErrors.array().map((error) => error.msg);
-        res.render('comment', {
+        res.render('create-comment', {
             title: 'user-comment',
             comment,
             errors,
