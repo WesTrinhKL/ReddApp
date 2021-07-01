@@ -1,9 +1,6 @@
 extends layout.pug
-
 include utils.pug
-
 block content
-
     //- link(rel="stylesheet" href="/stylesheets/feed.css")
     div.content-container
         h1.title Latest Posts
@@ -11,13 +8,13 @@ block content
                 div.post-container
                     div.post-title-preview
                         h3
-                            a(style="color: #f0ad8e", href=`/posts/feed/${post.id}`)= post.header
+                            a(style="color: #F0AD8E", href=`/posts/feed/${post.id}/create-comment`)= post.header
                         div.content-preview
                             h2= post.content
                         div.user-posted
                             p(post-container__user-font) posted by user:
                                 span #{post.user.username}
-                                br
+                                 br
                                 a(href=`/posts/feed/${post.id}/edit`)
                                         i Edit
                     hr
