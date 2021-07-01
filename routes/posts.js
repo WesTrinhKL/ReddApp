@@ -44,7 +44,6 @@ router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req
 router.get('/feed', asyncHandler(async (req, res) => {
 
     const allPosts = await db.Post.findAll({
-const allPosts = await db.Post.findAll({
         attributes: ['id', 'header', 'content'],
         include: { model: db.User, as: 'user' }
     })
@@ -108,7 +107,7 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
         const postId = parseInt(req.params.id, 10);
         const post = await db.Post.findByPk(postId);
         const userId = req.session.auth.userId
-        
+
         const comment = db.Comment.build() //CREATE EMPTY USER INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
         res.render('create-comment', {
             title: '',
@@ -135,7 +134,7 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
         userId,
         postId,
     });
-    
+
     const validationErrors = validationResult(req);
     if (validationErrors.isEmpty()) {
         await comment.save();
@@ -166,6 +165,15 @@ router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res)
         res.redirect('/');
     }
 }))
+
+// router.get('/feed/edit/:id(\\d+)'), requireAuth, asyncHandler (async (req, res) => {
+//     res.render('edit-posts')
+// })
+
+// router.post('/feed/edit/:id(\\d+)'), requireAuth, asyncHandler (async (req, res) => {
+
+// })
+
 
 
 module.exports = router
