@@ -1,26 +1,26 @@
-/* @font-face {
-  font-family: "Vibes";
-  src: url("fonts/GreatVibes-Regular.ttf");
-} */
+/* global variables and styles */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 @font-face {
   font-family: "Ruhl";
   src: url("fonts/FrankRuhlLibre-Regular.ttf");
 }
 
-@font-face {
-  font-family: "Ruhl Medium";
-  src: url("fonts/FrankRuhlLibre-Medium.ttf");
-}
+
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: Roboto;
+}
+
+body{
+  background-color: #DAE0E6;
 }
 
 html {
   font-size: 62.5%;
-  --header1: calc(2.5rem + 1vw);
+  --header1: calc(1.5rem + 1vw);
   --header2: calc(3.5rem + 1vw);
   --header3: calc(3rem + 1vw);
   --header4: calc(2.4rem + 1vw);
@@ -52,7 +52,7 @@ h3 {
   font-size: var(--header3);
 }
 
-/* --------navbar------ */
+/* navbar */
 
 
 header * {
@@ -73,7 +73,7 @@ header ul li {
 
 
 header ul li a:hover {
-  background: #9c857e;
+  background: #b4b4b4;
   transition: 0.3s;
 }
 
@@ -83,7 +83,7 @@ header ul li a:hover {
 
 }
 
-.main-head {
+.main-nav {
   box-shadow: 2px 11px 11px rgba(10, 9, 9, 0.1);
   background-color: rgb(177, 104, 104);
   z-index: 5;
@@ -105,7 +105,8 @@ nav {
   align-items: center;
   min-height: 8vh;
   padding: 2rem 1;
-  background-color: #EAD3CB;
+  background-color: #ffffff;
+    /* EAD3CB */
   justify-content: space-between;
 }
 
@@ -129,8 +130,6 @@ nav {
 }
 .navbar__links{
   display: flex;
-  /* justify-content: space-around; */
-  /* flex: 1 1 10rem; */
   margin-right: 30px;
 }
 
@@ -147,4 +146,8 @@ nav {
 
 .spacing-icon{
   margin-right: 10px;
+}
+
+@media (max-width: 600px) {
+  /* add hamburger style later */
 }

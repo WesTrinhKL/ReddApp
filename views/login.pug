@@ -1,15 +1,26 @@
 extends layout.pug
-
 include utils.pug
 
+block styles
+  link(rel="stylesheet" href="/stylesheets/login.css")
+  link(rel="stylesheet" href="/stylesheets/footer.css")
+
 block content
-  +validationErrorSummary(errors)
-  form(action='/users/login' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Username', 'username', username, false)
-    +field('Password', 'password', null, 'password', false)
-    div(class='py-4')
-      button(type='submit' class='btn btn-primary') Login
-      a(href='/' class='btn btn-warning ml-2') Cancel
-  div
-    p: a(href='/users/sign-up') Don't have an account?
+
+  div(class='login-container')
+    h2(class='sign-in-title') Sign In
+    +validationErrorSummary(errors)
+    form(action='/users/login' method='post')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      +fieldLoginSignup('Username', 'username', username, false )
+      +fieldLoginSignup('Password', 'password', null, 'password', false )
+      div(class='login-button-container')
+        button(type='submit' class='login-button') Login
+        //- a(href='/' class='btn btn-warning ml-2') Cancel
+
+        div(class='go-to-signup') Don't have an
+          a( href='/users/sign-up')   account?
+
+  footer.footer-distributed
+    .footer-left
+      p ReddApp &copy; 2021

@@ -44,6 +44,7 @@ router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req
 router.get('/feed', asyncHandler(async (req, res) => {
 
     const allPosts = await db.Post.findAll({
+const allPosts = await db.Post.findAll({
         attributes: ['id', 'header', 'content'],
         include: { model: db.User, as: 'user' }
     })
@@ -51,6 +52,7 @@ router.get('/feed', asyncHandler(async (req, res) => {
     //     console.log(post.id)
     // })
     const user = res.locals.user
+
 
     if (req.session.auth) {
         res.render('feed', {

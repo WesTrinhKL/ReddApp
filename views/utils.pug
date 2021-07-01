@@ -5,21 +5,22 @@ mixin field( labelText, fieldName, fieldValue, fieldType, multiline)
          textarea(id=fieldName name=fieldName class='form-control' rows='5')= fieldValue
      else
          input(type=fieldType id=fieldName name=fieldName value=fieldValue class='form-control')
-//- mixin textField(labelText, fieldName, fieldValue, isMultiline, placeholder)
-//-   div(class='form-group')
-//-     label(for=fieldName)= labelText
-    //- if isMultiline
-    //-   textarea(id=fieldName name=fieldName class='form-control' rows='5')= fieldValue
-    //- else
-      input(type='text' id=fieldName name=fieldName value=fieldValue placeholder=placeholder class='form-control')
+
+
+mixin fieldLoginSignup( labelText, fieldName, fieldValue, fieldType, multiline)
+  div(class='form-group')
+     if multiline
+         textarea(id=fieldName name=fieldName class='form-control' rows='5')= fieldValue
+     else
+         input(type=fieldType id=fieldName name=fieldName value=fieldValue placeholder=labelText class='input-field')
+
 
 mixin validationErrorSummary(errors)
     if errors
-        div
-            p errors:
-                ul
-                    each error in errors
-                        li= error
+        div(class='error-group')
+          ul
+            each error in errors
+              li *#{error}
 
 mixin field-signup(labelText, fieldName, fieldValue, fieldType = 'text')
   div(class='form-group')

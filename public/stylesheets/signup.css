@@ -1,0 +1,124 @@
+/* general global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 10%;
+  /* margin-left: auto; */
+}
+
+.input-field{
+  background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 30%;
+  /* margin-left: 10%; */
+}
+
+
+/* errors styling */
+.error-group{
+  margin-left: 10%;
+  color: rgb(230, 63, 63);
+}
+
+.error-group ul{
+  list-style: none;
+}
+
+.error-group ul li{
+  padding: 5px 0px;
+  font-size: medium;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+/* sign in container */
+.input-field, .signup-button {
+  border-radius: 14px;
+}
+
+.sign-up-title{
+  display: flex;
+  justify-content: flex-end;
+
+  font-weight: bold;
+  margin-right: 10%;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 8%;
+  color: #27394e;
+
+}
+
+.signup-container {
+
+  background: linear-gradient(
+    250deg,
+
+    rgb(150, 200, 206, 0.80) 50%,
+    rgba(151, 214, 219) 50%,
+    transparent 50%
+    ),
+    url("../images/webcampers3.jpg") center center no-repeat;
+  background-size: cover;
+  height: 850px;
+
+}
+
+/* signup button */
+.signup-button-container{
+
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 10%;
+
+}
+
+.signup-button {
+  padding: 1rem 5rem;
+  background: #4c6e97;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  width: 30%;
+  margin-left: 10%;
+  padding: 12px 0;
+}
+
+.signup-button:hover {
+  background: #27394e;
+}
+
+.go-to-login {
+  margin-right: 0%;
+  margin-top: 10px;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.go-to-login a {
+  font-size: medium;
+  text-decoration: none;
+  color: #845460;
+  font-weight: bold;
+}
+
+/* form 0px to 600px apply these styles */
+@media (max-width: 600px) {
+  .go-to-login, .go-to-login a{
+    font-size: small;
+
+  }
+}

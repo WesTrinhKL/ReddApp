@@ -1,0 +1,121 @@
+/* general global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.input-field{
+  background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 30%;
+  margin-left: 10%;
+}
+
+
+/* errors styling */
+.error-group{
+  margin-left: 10%;
+  color: rgb(230, 63, 63);
+}
+
+.error-group ul{
+  list-style: none;
+}
+
+.error-group ul li{
+  padding: 5px 0px;
+  font-size: medium;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+/* sign in container */
+.input-field, .login-button {
+  border-radius: 14px;
+}
+
+.sign-in-title{
+  font-weight: bold;
+  margin-left: 10%;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 8%;
+  color: #27394e
+}
+
+.sign-in-title__in{
+  color:#845460;
+}
+
+.login-container {
+  background: linear-gradient(
+    70deg,
+
+    rgb(150, 200, 206, 0.70) 50%,
+    rgba(151, 214, 219) 50%,
+    transparent 50%
+    ),
+    url("../images/webcampers2.jpg") center center no-repeat;
+  background-size: cover;
+  height: 850px;
+  /* background: linear-gradient(
+      110deg,
+      rgb(150, 200, 206) 0%,
+      rgba(151, 214, 219, 0.70) 0%,
+      transparent 50%
+    ),
+    url("../images/webcampers2.jpg") center center no-repeat;
+  background-size: cover;
+  height: 755px; */
+
+}
+
+/* login button */
+.login-button-container{
+
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.login-button {
+  padding: 1rem 5rem;
+  background: #4c6e97;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  width: 30%;
+  margin-left: 10%;
+  padding: 12px 0;
+}
+
+.login-button:hover {
+  background: #27394e;
+}
+
+.go-to-signup {
+  margin-left: 10%;
+  margin-top: 10px;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.go-to-signup a {
+  font-size: medium;
+  text-decoration: none;
+  color: #845460;
+  font-weight: bold;
+}
+
+/* form 0px to 600px apply these styles */
+@media (max-width: 600px) {
+  .go-to-signup, .go-to-signup a{
+    font-size: small;
+
+  }
+}
