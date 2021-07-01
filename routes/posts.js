@@ -20,6 +20,8 @@ router.get('/create-post', csrfProtection, asyncHandler(async (req, res) => {
         post,
         csrfToken: req.csrfToken(),
     })
+
+
 }))
 
 router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
@@ -64,15 +66,22 @@ router.get('/feed', asyncHandler(async (req, res) => {
 }
 ));
 
-router.get("/feed/:id(\\d+)", asyncHandler(async (req, res) => {
+router.get("/feed/:id(\\d+)", requireAuth, csrfProtection, asyncHandler(async (req, res) => {
 
     const postId = parseInt(req.params.id, 10);
-    console.log(postId)
     const post = await db.Post.findByPk(postId);
-    console.log(post)
+    if (req.session.auth) {
+        const { userId } = req.session.auth;
+        const user = await db.User.findByPk(userId);
+
+        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', `${user.username}`)
+    }
     res.render("one-post", {
-        post
+        Title: 'User\'s Post',
+        post,
+        csrfToken: req.csrfToken(),
     });
+
 }));
 
 // router.post("/feed//:id(\\d+)", csrfProtection, asyncHandler(async (req, res) => {
