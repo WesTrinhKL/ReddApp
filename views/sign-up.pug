@@ -1,16 +1,27 @@
 extends layout.pug
-
 include utils.pug
 
+block styles
+  link(rel="stylesheet" href="/stylesheets/signup.css")
+  link(rel="stylesheet" href="/stylesheets/footer.css")
+
+
 block content
-  +validationErrorSummary(errors)
-  form(action='/users/sign-up' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Username', 'username', user.username)
-    +field('Password', 'password', user.password, 'password', false)
-    +field('Confirm Password', 'confirmPassword', '', 'password', false)
-    div(class='py-4')
-      button(type='submit' class='btn btn-primary') Sign-Up
-      a(href='/' class='btn btn-warning ml-2') Cancel
-  div
-    p: a(href='/users/login') Already have an account?
+  div(class='signup-container')
+    h2(class='sign-up-title') Sign Up
+    +validationErrorSummary(errors)
+    form(class="flex-input" action='/users/sign-up' method='post')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      +fieldLoginSignup('Username', 'username', username, false )
+      +fieldLoginSignup('Password', 'password', null, 'password', false )
+      +fieldLoginSignup('Confirm Password', 'confirmPassword', '', 'password', false)
+      div(class='signup-button-container')
+        button(type='submit' class='signup-button') Sign Up
+        //- a(href='/' class='btn btn-warning ml-2') Cancel
+
+        div(class='go-to-login') Already have an
+          a( href='/users/login')   account?
+
+  footer.footer-distributed
+    .footer-left
+      p ReddApp &copy; 2021

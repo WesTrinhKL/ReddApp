@@ -1,0 +1,24 @@
+
+
+.footer-distributed {
+  position: fixed;
+  background-color: #2B4F60;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 30px;
+}
+
+.footer-distributed .footer-left p {
+  color: #8f9296;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Media Queries */
+
+@media (max-width: 600px) {
+  .footer-left {
+    text-align: center;
+  }
+}

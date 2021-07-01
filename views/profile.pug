@@ -1,21 +1,105 @@
 extends layout.pug
 
-
+block styles
+  link(rel="stylesheet" href="/stylesheets/profile.css")
 
 block content
-  append head
-  //- add page specific styles by appending to the head
-  link(rel="stylesheet" href="/stylesheets/profile.css")
+
   //- add page specific js
   //- script(src="/javascripts/index.js" type="module" defer)
-  div.container-card
-    div.card
-      img(src='../images/default-profile-picture1.jpg' alt="profile img" style="width:100%")
-      div.user-info-container
-        h4
-          b=user.username
-          p.profession Software Engineer
-          p.location Los Angeles, CA
+  header
+  main
+  div.profile-grid-container
+    div.container-card.grid-item-profile
+      div.card
+        img(class='profile-image' src='../images/default-profile-picture1.jpg' alt="profile img")
+        div.user-info-container
+          div.user-info-container__details
+            div.username=user.username
+            div.profession Software Engineer
+            div.location Los Angeles, CA
           div.user-details__buttons
-            button.view-follow Follow
-            button.view-posts View Posts
+            button.follow-button Follow
+    div.socials-container.grid-item-socials
+      //- for each social of user in db, render template of data
+      div.socials-flex-container
+        div.social-items
+          div.social-item
+            div.social-link
+              div.social-link__icon
+                i.fab.fa-github
+              div.social-link__text Github
+              hr.social-divider
+            div.handle-text BartS
+        div.social-items
+          div.social-item
+            div.social-link
+              div.social-link__icon
+                i.fab.fa-linkedin
+              div.social-link__text LinkedIn
+              hr.social-divider
+            div.handle-text linkedin.com/in/BartS
+        div.social-items
+          div.social-item
+            div.social-link
+              div.social-link__icon
+                i.fas.fa-user-circle
+              div.social-link__text Website
+              hr.social-divider
+            div.handle-text barts.io
+        div.social-items
+          div.social-item
+            div.social-link
+              div.social-link__icon
+                i.fas.fa-envelope
+              div.social-link__text Email
+              hr.social-divider
+            div.handle-text barts@gmail.com
+        div.social-items
+          div.social-item
+            div.social-link
+              div.social-link__icon
+                i.fab.fa-twitter-square
+              div.social-link__text Twitter
+              hr.social-divider
+            div.handle-text @Barts
+        div.social-items
+          div.social-item
+            div.social-link
+              div.social-link__icon
+                i.fab.fa-instagram-square
+              div.social-link__text Instagram
+              hr.social-divider
+            div.handle-text @BartS
+    div.skills-container.grid-item-skills
+      div.user-skills
+        div.user-skills-title Skills
+        div.user-skills-items
+          div.skill-item JavaScript
+          div.skill-item CSS
+          div.skill-item HTML
+          div.skill-item Pug
+          div.skill-item Node
+          div.skill-item Express
+          div.skill-item Mocha-Chai
+          div.skill-item SQL
+          div.skill-item PostgreSQL
+          div.skill-item Sequelize
+          div.skill-item Algorithms
+          div.skill-item Datastructures
+          div.skill-item CS Fundamentals
+          div.skill-item Git
+          div.skill-item UI/UX
+          div.skill-item Photoshop
+          div.skill-item Figma
+          div.skill-item Skateboarding
+
+    div.posts-container.grid-item-posts
+      div.user-posts
+        div.user-title Bart's Recent Posts
+        hr.posts-hr
+        div.post-outline post1
+        div.post-outline post2
+        div.post-outline post3
+        div.post-outline post4
+        div.post-outline post5

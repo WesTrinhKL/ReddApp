@@ -5,13 +5,22 @@
   box-sizing: border-box;
 }
 
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 10%;
+  /* margin-left: auto; */
+}
+
 .input-field{
   background-color: #eee;
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 30%;
-  margin-left: 10%;
+  /* margin-left: 10%; */
 }
 
 
@@ -33,55 +42,49 @@
 }
 
 /* sign in container */
-.input-field, .login-button {
+.input-field, .signup-button {
   border-radius: 14px;
 }
 
-.sign-in-title{
+.sign-up-title{
+  display: flex;
+  justify-content: flex-end;
+
   font-weight: bold;
-  margin-left: 10%;
+  margin-right: 10%;
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 8%;
-  color: #27394e
+  color: #27394e;
+
 }
 
-.sign-in-title__in{
-  color:#845460;
-}
+.signup-container {
 
-.login-container {
   background: linear-gradient(
-    70deg,
+    250deg,
 
-    rgb(150, 200, 206, 0.70) 50%,
+    rgb(150, 200, 206, 0.80) 50%,
     rgba(151, 214, 219) 50%,
     transparent 50%
     ),
-    url("../images/webcampers2.jpg") center center no-repeat;
+    url("../images/webcampers3.jpg") center center no-repeat;
   background-size: cover;
   height: 850px;
-  /* background: linear-gradient(
-      110deg,
-      rgb(150, 200, 206) 0%,
-      rgba(151, 214, 219, 0.70) 0%,
-      transparent 50%
-    ),
-    url("../images/webcampers2.jpg") center center no-repeat;
-  background-size: cover;
-  height: 755px; */
 
 }
 
-/* login button */
-.login-button-container{
+/* signup button */
+.signup-button-container{
 
   margin-top: 5px;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
+  margin-right: 10%;
 
 }
 
-.login-button {
+.signup-button {
   padding: 1rem 5rem;
   background: #4c6e97;
   border: none;
@@ -94,18 +97,18 @@
   padding: 12px 0;
 }
 
-.login-button:hover {
+.signup-button:hover {
   background: #27394e;
 }
 
-.go-to-signup {
-  margin-left: 10%;
+.go-to-login {
+  margin-right: 0%;
   margin-top: 10px;
   font-size: medium;
   font-weight: bold;
 }
 
-.go-to-signup a {
+.go-to-login a {
   font-size: medium;
   text-decoration: none;
   color: #845460;
@@ -114,7 +117,7 @@
 
 /* form 0px to 600px apply these styles */
 @media (max-width: 600px) {
-  .go-to-signup, .go-to-signup a{
+  .go-to-login, .go-to-login a{
     font-size: small;
 
   }
