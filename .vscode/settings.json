@@ -1,6 +1,8 @@
 {
     "cSpell.ignoreWords": [
+        "bttn",
         "csrf",
+        "delete",
         "token"
     ]
 }
