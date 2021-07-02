@@ -1,11 +1,10 @@
 const express = require('express');
 const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
-const { requireAuth, loginUser, logoutUser, restoreUser } = require('../auth');
+const { requireAuth } = require('../auth');
 const db = require('../db/models');
 
 const router = express.Router();
-const { Comment } = db;
 
 router.get('/', csrfProtection, asyncHandler(async (req, res) => {
     res.redirect('/posts/feed')

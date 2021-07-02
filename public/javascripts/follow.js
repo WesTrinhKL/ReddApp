@@ -14,6 +14,9 @@ const followButtonEl = document.querySelector(".user-follow-btn")
           window.location.href = "/";
           return;
         }
+        if (res.status === 301){
+          window.location.href = "http://localhost:8080/users/login"
+        }
 
         const { follow } = await res.json();
 

@@ -26,8 +26,9 @@
 
 /* errors styling */
 .error-group{
-  margin-left: 10%;
+  margin-right: 0;
   color: rgb(230, 63, 63);
+  text-align: right;
 }
 
 .error-group ul{
@@ -39,6 +40,12 @@
   font-size: medium;
   font-weight: bold;
   font-family: sans-serif;
+}
+
+.validation-container{
+  width: 30%;
+  margin-left: auto;
+  margin-right: 10%;
 }
 
 /* sign in container */

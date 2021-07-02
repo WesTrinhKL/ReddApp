@@ -2,10 +2,10 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const express = require('express');
 const db = require('../db/models');
 const { check, validationResult } = require('express-validator');
+const { Op } = require("sequelize");
 const bcrypt = require('bcryptjs');
 const { requireAuth, loginUser, logoutUser, restoreUser } = require('../auth');
-const { Comment } = db;
-const { Op } = require("sequelize");
+
 
 const router = express.Router();
 
@@ -114,7 +114,13 @@ router.post('/login', csrfProtection, loginValidators,
         const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
         if (passwordMatch) {
           loginUser(req, res, user);
-          return res.redirect('/posts/feed');
+          req.session.save(error => {
+            if(error){
+              next(error)
+            } else {
+              return res.redirect('/posts/feed');
+            }
+          })
         }
       }
       errors.push('Login failed for the provided username and password');
@@ -155,10 +161,21 @@ router.get('/my-profile', requireAuth, asyncHandler(async (req, res) => {
     const user = await db.User.findByPk(userId);
 
     if (user) {
+
+      const currentUserPosts = await db.Post.findAll({
+        where:{
+          userId: user.id,
+        },
+        attributes: ['id','header', 'content'],
+        include: { model: db.User, as: 'user' },
+        limit: 20,
+        order:  [['updatedAt', 'DESC']],
+    })
       res.render('profile.pug', {
         title: 'Profile Page',
         user,
         userBeingViewed: user,
+        currentUserPosts
       });
     }
   } else {
@@ -177,20 +194,21 @@ router.get('/profile/:id(\\d+)', asyncHandler(async (req, res) => {
     //default data if follower not found
     let buttonClass = "follow-button";
     let text= "Follow"
-
-    const follow = await db.Follow.findOne({ //find if user is following the one being viewed
-      where:{
-        [Op.and]: [
-          { followBelongsToUserID: userId },
-          { followerUserID: ourUser.id }
-        ]
+    let follow;
+    if(req.session.auth){
+      follow = await db.Follow.findOne({ //find if user is following the one being viewed
+        where:{
+          [Op.and]: [
+            { followBelongsToUserID: userId },
+            { followerUserID: ourUser.id }
+          ]
+        }
+      })
+      if(follow){
+        buttonClass= "unfollow-button";
+        text = "Following";
       }
-    })
-    if(follow){
-      buttonClass= "unfollow-button";
-      text = "Following";
     }
-
     // console.log("follow obj!!! ", follow)
     res.render('profile.pug', {
       title: 'Profile Page',
@@ -226,6 +244,10 @@ router.get('/followers' , asyncHandler(async(req,res)=>{
 }))
 
 router.get('/follow/:id(\\d+)', asyncHandler(async (req,res)=>{
+  if(!req.session.auth){
+    res.status(301).end();
+    return;
+  }
   const userToFollowID = parseInt(req.params.id, 10);
   const loggedInUserID = req.session.auth.userId //.userId is placed in res from login in auth.js
   //make sure user is authenticated and user ID is not itself.
@@ -235,6 +257,9 @@ router.get('/follow/:id(\\d+)', asyncHandler(async (req,res)=>{
     //add the follow relationship to db. create the following record
     const follow = await db.Follow.create({followBelongsToUserID:userToFollowID, followerUserID:loggedInUserID})
     res.json({follow});
+  }
+  else{
+    res.status(401).end();
   }
 }));
 
