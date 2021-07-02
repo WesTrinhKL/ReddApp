@@ -1,9 +1,6 @@
-
-
 body{
   background-color: #DAE0E6;
 }
-
 /* ---grid-profile-container */
 .profile-grid-container{
   width: 70%;
@@ -16,12 +13,10 @@ body{
   "followers posts"
   "skills posts"
   "socials posts";
-
   grid-template-columns: 1fr 2fr;
   grid-template-rows: auto;
   gap: 15px;
 }
-
 .grid-item-profile{
   grid-area: profile;
 }
@@ -38,7 +33,6 @@ body{
   grid-area: followers;
 }
 /* ---profile-card--- */
-
 .card {
   margin:20px auto 0 auto;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -50,29 +44,22 @@ body{
   min-width: 20%;
   overflow: hidden;
 }
-
 .profile-image{
   /* padding-top: 10px; */
   border-radius: 50%;
   margin: 25px auto 5px auto;
   width: 60%;
 }
-
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-
-
 .card-body {
   flex: 1 1 auto;
   min-height: 1px;
   padding: 1rem;
 }
-
 /* .container-card {
-
 } */
-
 /* ---profile-card__user-info--- */
 .user-info-container {
   padding: 2px 16px;
@@ -87,28 +74,24 @@ body{
   font-size: medium;
   margin-top: 5px;
 }
-
 .profession{
   color: grey;
   font-size: 18px;
   margin-top: 5px;
 }
-
 .user-info-container__details{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .user-details__buttons{
   display:flex;
   justify-content: center;
   margin-bottom: 15px;
 }
-
 .follow-button{
   /* padding: 1rem 5rem; */
-  background: #4c6e97;
+  background: #4C6E97;
   border: none;
   color: white;
   font-size: 1.5rem;
@@ -122,13 +105,12 @@ body{
   font-family: sans-serif;
 }
 .follow-button:hover {
-  background: #27394e;
+  background: #27394E;
 }
-
 .unfollow-button{
   /* padding: 1rem 5rem; */
   font-family: sans-serif;
-  background: #4fbb54;
+  background: #4FBB54;
   border: none;
   color: white;
   font-size: 1.5rem;
@@ -139,13 +121,10 @@ body{
   padding: 6px 4px;
   border-radius: 5%;
   font-weight: bold;
-
 }
 .unfollow-button:hover {
   background: #107215;
 }
-
-
 /* ---socials---- */
 .social-items{
   width: 90%;
@@ -156,32 +135,25 @@ body{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   border-radius: .30rem;
 }
-
 /* .socials-flex-container{
-
 } */
-
 .social-item{
   width: 90%;
   margin: auto;
   display: flex;
   justify-content: space-between;
 }
-
 .social-link{
   display:flex;
   justify-content: space-between;
   width: 100px;
   position:relative;
-
 }
-
 .social-link__icon{
   /* padding: 5px 0; */
   display:flex;
   align-items: center;
 }
-
 .social-link__text{
   padding: 5px 5px;
   font-size: small;
@@ -189,14 +161,11 @@ body{
   left: 8px;
   text-overflow: clip;
 }
-
 .handle-text{
   color: grey;
   font-size: small;
   padding: 5px 5px;
-
 }
-
 .social-divider {
   color: gray;
   border-style: inset;
@@ -206,7 +175,6 @@ body{
   margin-left: 0;
   display: none;
 }
-
 /* ---posts--- */
 .user-posts{
   margin:20px auto 0 auto;
@@ -219,20 +187,17 @@ body{
   min-width: 20%;
   height: 100%;
 }
-
 .user-title{
   font-size: var(--header3);
   padding: 5px 0 0 35px;
-  color: #27394e;
+  color: #27394E;
   font-weight: bold;
 }
-
 .posts-hr{
   width: 90%;
   margin: 0 auto;
   color: gray
 }
-
 .post-outline{
   margin:20px auto 20px auto;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -244,7 +209,6 @@ body{
   min-width: 20%;
   height: 100%;
 }
-
 /* ---skills--- */
 .user-skills {
   margin:0 auto 2px auto;
@@ -257,17 +221,15 @@ body{
   min-width: 20%;
   /* height: 150px; */
 }
-
 .user-skills-title{
   font-size: Medium;
-  color: #27394e;
+  color: #27394E;
   font-weight: bold;
-  border-bottom: 2px solid #27394e;
+  border-bottom: 2px solid #27394E;
   padding: 5px 0 0 0;
   width:90%;
   margin: 5px auto 0 auto;
 }
-
 .user-skills-items{
   display: flex;
   /* justify-content: space-around; */
@@ -275,7 +237,6 @@ body{
   width: 90%;
   margin: 5px auto 10px auto;
 }
-
 .skill-item{
   font-size: small;
   font-family: sans-serif;
@@ -284,10 +245,9 @@ body{
   padding:5px;
   margin: 5px;
   color: white;
-  background-color: #8b4b4b;
+  background-color: #8B4B4B;
   border-radius: 5px;
 }
-
 /* ---followers section */
 .followers-flex{
   width: 90%;
@@ -299,21 +259,18 @@ body{
   border-radius: .30rem;
   height: 30px;
 }
-
 .followers-title{
   padding-top: 10px 0px;
   margin: auto;
   width: 80%;
   text-align: center;
-
-  /* border-bottom: 2px solid #27394e; */
+  /* border-bottom: 2px solid #27394E; */
 }
-
 .followers-title a {
   text-decoration: none;
   font-family: sans-serif;
   font-size: var(--sub-header);
-  color: #27394e;
+  color: #27394E;
   font-weight: bold;
 }
 .followers-title a i{
@@ -323,6 +280,5 @@ body{
 @media (max-width: 1300px) {
   .user-follow-btn{
     font-size: 90%;
-
   }
 }

@@ -45,13 +45,12 @@ router.get('/feed', asyncHandler(async (req, res) => {
 
 
     const allPosts = await db.Post.findAll({
-
-        attributes: ['id', 'header', 'content'],
+        attributes: ['id','header', 'content'],
         include: { model: db.User, as: 'user' }
     })
-    // allPosts.forEach(post => {
-    //     console.log(post.id)
-    // })
+    allPosts.forEach(post => {
+        console.log('id is:',post.id)
+    })
     const user = res.locals.user
 
 
@@ -111,6 +110,12 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
         const userId = req.session.auth.userId
 
 
+        const originalPoster = post.userId;
+        const originalUser = await db.User.findByPk(originalPoster);
+        const allComments = await db.Comment.findAll({
+            attributes: ['id', 'content', 'userId', 'postId'],
+            include: { model: db.User, as: 'user' },
+        })
         const comment = db.Comment.build() //CREATE EMPTY COMMENT INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
 
 
@@ -121,7 +126,9 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
             comment,
             postId,
             userId,
-            post
+            post,
+            originalUser,
+            allComments,
         })
     } else {
         res.redirect('/')
@@ -156,16 +163,27 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
     }
 }))
 
-router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req, res) => {
-    const allComments = await db.Comment.findAll({
-        attributes: ['id', 'content', 'userId', 'postId'],
-        include: { model: db.User, as: 'user' },
-    })
-
-    const user = res.locals.user
+router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res) => {
     if (req.session.auth) {
+        const postId = parseInt(req.params.id, 10);
+        const post = await db.Post.findByPk(postId);
+        const userId = req.session.auth.userId
+        const originalPoster = post.userId;
+        const originalUser = await db.User.findByPk(originalPoster);
+
+        const allComments = await db.Comment.findAll({
+            attributes: ['id', 'content', 'userId', 'postId'],
+            include: { model: db.User, as: 'user' },
+        })
+        const comment = db.Comment.build()
+        const user = res.locals.user
         res.render('comment', {
-            Title: `${user.username} Comments`,
+            title: '',
+            comment,
+            postId,
+            userId,
+            post,
+            originalUser,
             allComments,
         })
     } else {

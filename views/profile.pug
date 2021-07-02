@@ -1,14 +1,10 @@
 extends layout.pug
-
 block styles
   link(rel="stylesheet" href="/stylesheets/profile.css")
-
 block content
-
   //- the only job that the profile view does is DISPLAY the USER BEING VIEWED
   header
   main
-
   div.profile-grid-container
     div.container-card.grid-item-profile
       div.card
@@ -24,8 +20,6 @@ block content
                 button(class=buttonClass class='user-follow-btn' id=userBeingViewed.id value=buttonClass) #{text}
               else
                 button(class=buttonClass class='user-follow-btn' id=userBeingViewed.id value=buttonClass) &#10003; Following
-
-
     div.socials-container.grid-item-socials
       //- for each social of user in db, render template of data
       div.socials-flex-container
@@ -99,7 +93,6 @@ block content
           div.skill-item Photoshop
           div.skill-item Figma
           div.skill-item Skateboarding
-
     div.posts-container.grid-item-posts
       div.user-posts
         div.user-title #{userBeingViewed.username}'s Recent Posts
@@ -115,8 +108,9 @@ block content
           div.followers-title
             a(class="followers-link" href="" ) View Your Followers
               <i class="fas fa-external-link-alt"></i>
-
-
-
-
   script(src="../../javascripts/follow.js")
+
+
+
+
+
