@@ -163,17 +163,7 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
     }
 }))
 
-<<<<<<< HEAD
-router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req, res) => {
-    const allComments = await db.Comment.findAll({
-        attributes: ['id', 'content', 'userId', 'postId'],
-        include: { model: db.User, as: 'user' },
-    })
-
-    const user = res.locals.user
-=======
 router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res) => {
->>>>>>> thursdayArath
     if (req.session.auth) {
         const postId = parseInt(req.params.id, 10);
         const post = await db.Post.findByPk(postId);
