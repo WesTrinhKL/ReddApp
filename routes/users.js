@@ -114,13 +114,7 @@ router.post('/login', csrfProtection, loginValidators,
         const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
         if (passwordMatch) {
           loginUser(req, res, user);
-          req.session.save(error => {
-            if(error){
-              next(error)
-            } else {
-              return res.redirect('/posts/feed');
-            }
-          })
+          return res.redirect('/posts/feed');
         }
       }
       errors.push('Login failed for the provided username and password');
@@ -244,10 +238,7 @@ router.get('/followers' , asyncHandler(async(req,res)=>{
 }))
 
 router.get('/follow/:id(\\d+)', asyncHandler(async (req,res)=>{
-  if(!req.session.auth){
-    res.status(301).end();
-    return;
-  }
+
   const userToFollowID = parseInt(req.params.id, 10);
   const loggedInUserID = req.session.auth.userId //.userId is placed in res from login in auth.js
   //make sure user is authenticated and user ID is not itself.
@@ -257,9 +248,6 @@ router.get('/follow/:id(\\d+)', asyncHandler(async (req,res)=>{
     //add the follow relationship to db. create the following record
     const follow = await db.Follow.create({followBelongsToUserID:userToFollowID, followerUserID:loggedInUserID})
     res.json({follow});
-  }
-  else{
-    res.status(401).end();
   }
 }));
 
