@@ -249,6 +249,9 @@ router.get('/follow/:id(\\d+)', asyncHandler(async (req,res)=>{
     const follow = await db.Follow.create({followBelongsToUserID:userToFollowID, followerUserID:loggedInUserID})
     res.json({follow});
   }
+  else{
+    res.status(401).end();
+  }
 }));
 
 router.delete('/follow/:id(\\d+)', asyncHandler(async (req,res,next)=>{
