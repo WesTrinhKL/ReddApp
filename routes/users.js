@@ -68,7 +68,7 @@ router.post('/sign-up', csrfProtection, userValidator, asyncHandler(async (req, 
     user.hashedPassword = hashedPassword;
     await user.save();
     loginUser(req, res, user);
-    res.redirect('/users/profile');
+    res.redirect('/users/my-profile');
   } else {
     const errors = validationErrors.array().map((error) => error.msg);
     res.render('sign-up', {
@@ -140,9 +140,10 @@ router.get('/demo', (async (req, res) => {
   res.redirect('/');
 }));
 
-router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
-  // console.log("local user", res.locals.user);
+router.get('/my-profile', requireAuth, asyncHandler(async (req, res) => {
+  // @feature: will fetch the user's own profile.
   if (req.session.auth) {
+     // console.log("local user", res.locals.user);
     const { userId } = req.session.auth;
     const user = await db.User.findByPk(userId);
 
@@ -150,6 +151,7 @@ router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
       res.render('profile.pug', {
         title: 'Profile Page',
         user,
+        viewingUser: user,
       });
     }
   } else {
@@ -157,19 +159,32 @@ router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
   }
 }));
 
-router.get('/profile/:id', requireAuth, asyncHandler(async (req, res) => {
-  // console.log("local user", res.locals.user);
-    const { userId } = req.params.id;
-    const user = await db.User.findByPk(userId);
+router.get('/profile/:id(\\d+)', asyncHandler(async (req, res) => {
 
-    if (user) {
-      res.render('profile.pug', {
-        title: 'Profile Page',
-        user,
-      });
-    }
-  } else {
-    res.redirect('/users/login');
+  const userId  = parseInt(req.params.id, 10);
+  const viewingUser = await db.User.findByPk(userId);
+
+  // console.log("this is our: ", user)
+
+  const ourUser = res.locals.user
+
+  res.render('profile.pug', {
+    title: 'Profile Page',
+    user: ourUser,
+    viewingUser,
+  });
+}));
+
+router.get('/follow/:id(\\d+)', asyncHandler(async (req,res)=>{
+  const userToFollowID = parseInt(req.params.id, 10);
+  const loggedInUserID = req.session.auth.userId //.userId is placed in res from login in auth.js
+  //make sure user is authenticated and user ID is not itself.
+  if ((req.session.auth && userToFollowID !== loggedInUserID)){
+    //TODO: Verify that the relationship does not exist, if it does exist, send back status error 401;
+
+    //add the follow relationship to db. create the following record
+    const follow = await db.Follow.create({followBelongsToUserID:loggedInUserID, followerUserID:userToFollowID})
+    res.json({follow});
   }
 }));
 

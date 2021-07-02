@@ -5,22 +5,27 @@ block styles
 
 block content
 
-  //- add page specific js
-  //- script(src="/javascripts/index.js" type="module" defer)
+  //- the only job that the profile view does is DISPLAY the USER BEING VIEWED
   header
   main
+
   div.profile-grid-container
     div.container-card.grid-item-profile
       div.card
-        img(class='profile-image' src='../images/default-profile-picture1.jpg' alt="profile img")
+        img(class='profile-image' src='../../images/bartcoder.png' alt="profile img")
         div.user-info-container
           div.user-info-container__details
-            div.username=user.username
+            div.username=viewingUser.username
             div.profession Software Engineer
             div.location Los Angeles, CA
           div.user-details__buttons
-            if locals.authenticated
-            button.follow-button.can-follow Follow
+            if (locals.authenticated && viewingUser.id !== locals.user.id) || !locals.authenticated
+              if !locals.authenticated
+                button(class="follow-button can-follow" value=viewingUser.id) Follow
+              else
+                button(class="unfollow-button can-follow" value=viewingUser.id) &#10003; Following
+
+
     div.socials-container.grid-item-socials
       //- for each social of user in db, render template of data
       div.socials-flex-container
@@ -97,10 +102,11 @@ block content
 
     div.posts-container.grid-item-posts
       div.user-posts
-        div.user-title Bart's Recent Posts
+        div.user-title #{viewingUser.username}'s Recent Posts
         hr.posts-hr
         div.post-outline post1
         div.post-outline post2
         div.post-outline post3
         div.post-outline post4
         div.post-outline post5
+  script(src="../../javascripts/follow.js")
