@@ -8,7 +8,10 @@ block content
   div.profile-grid-container
     div.container-card.grid-item-profile
       div.card
-        img(class='profile-image' src='../../images/bartcoder.png' alt="profile img")
+        if userBeingViewed.username === "bartS"
+          img(class='profile-image' src='../../images/bartcoder.png' alt="profile img")
+        else
+          img(class='profile-image' src='../../images/default.jpg' alt="profile img")
         div.user-info-container
           div.user-info-container__details
             div.username=userBeingViewed.username
@@ -106,11 +109,6 @@ block content
       div.followers-container.grid-item-followers
         div.followers-flex
           div.followers-title
-            a(class="followers-link" href="" ) View Your Followers
+            a(class="followers-link" href="" )  View Following
               <i class="fas fa-external-link-alt"></i>
   script(src="../../javascripts/follow.js")
-
-
-
-
-

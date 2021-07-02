@@ -1,12 +1,11 @@
 const express = require('express');
 const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
-const { requireAuth, loginUser, logoutUser, restoreUser } = require('../auth');
+const { requireAuth } = require('../auth');
 const db = require('../db/models');
 const { Op } = require("sequelize");
 
 const router = express.Router();
-const { Comment } = db;
 
 router.get('/', csrfProtection, asyncHandler(async (req, res) => {
     res.redirect('/posts/feed')
@@ -44,26 +43,53 @@ router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req
 
 router.get('/feed', asyncHandler(async (req, res) => {
 
-
-    const allPosts = await db.Post.findAll({
-        attributes: ['id','header', 'content'],
-        include: { model: db.User, as: 'user' }
-    })
-    // allPosts.forEach(post => {
-    //     console.log('id is:',post.id)
-    // })
     const user = res.locals.user
 
+    //@Notes: gets all the normal posts
+    const allPosts = await db.Post.findAll({
+        attributes: ['id','header', 'content'],
+        include: { model: db.User, as: 'user' },
+        limit: 20,
+        order:  [['updatedAt', 'DESC']],
+    })
+
+    //@Notes: if logged in, grab posts where user is following those poeple
+    let allPostsThatUserIsFollowing;
+    if(req.session.auth){
+        const getAllPeopleTheUserIsFollowing = await db.Follow.findAll({
+            where:{
+                followerUserID: req.session.auth.userId,
+            },
+            attributes: ['followBelongsToUserID'],
+
+        })
+
+        const arrayOfFollowingId = getAllPeopleTheUserIsFollowing.map((user)=>{
+            return user['followBelongsToUserID'];
+        })
+
+        allPostsThatUserIsFollowing = await db.Post.findAll({
+            where:{
+                userId: arrayOfFollowingId
+            },
+            include: { model: db.User, as: 'user' },
+            limit: 20,
+            order:  [['updatedAt', 'DESC']],
+        })
+        console.log("all posts the user is following", allPostsThatUserIsFollowing);
+    }
 
     if (req.session.auth) {
         res.render('feed', {
             Title: `${user.username} Feed`,
             allPosts,
+            allPostsThatUserIsFollowing,
         })
     } else {
         res.render('feed', {
             Title: 'Global Feed',
             allPosts,
+            allPostsThatUserIsFollowing,
         })
     }
 }
@@ -171,7 +197,7 @@ router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res)
         const userId = req.session.auth.userId
         const originalPoster = post.userId;
         const originalUser = await db.User.findByPk(originalPoster);
-    
+
         const allComments = await db.Comment.findAll({
             order: [
                 ['id', 'DESC'],
