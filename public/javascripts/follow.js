@@ -7,7 +7,7 @@ const followButtonEl = document.querySelector(".user-follow-btn")
     if(followButtonEl.value === "follow-button"){
       try {
         const followId = followButtonEl.id;
-        const res = await fetch(`http://localhost:8080/users/follow/${followId}`);
+        const res = await fetch(`/users/follow/${followId}`);
 
         //make 300 code -- did you really try to follow yourself?
         if (res.status === 401) {
