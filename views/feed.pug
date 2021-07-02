@@ -44,7 +44,7 @@ block content
                             div.post-items
                                 div.post-title-preview
                                 div.post-comment-view-button
-                                    a(href=`/posts/feed/${post.id}/create-comment`)= post.header
+                                    a( href=`/posts/feed/${post.id}/create-comment`)= post.header
                                 div.content-posted-by-container
                                     div.content-posted-by__user-link posted by user:
                                         a(href=`/users/profile/${post.user.id}`)   #{ post.user.username}

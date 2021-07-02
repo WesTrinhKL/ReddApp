@@ -50,6 +50,7 @@ router.get('/feed', asyncHandler(async (req, res) => {
         attributes: ['id','header', 'content'],
         include: { model: db.User, as: 'user' },
         limit: 20,
+        order:  [['updatedAt', 'DESC']],
     })
 
     //@Notes: if logged in, grab posts where user is following those poeple
@@ -59,7 +60,8 @@ router.get('/feed', asyncHandler(async (req, res) => {
             where:{
                 followerUserID: req.session.auth.userId,
             },
-            attributes: ['followBelongsToUserID']
+            attributes: ['followBelongsToUserID'],
+
         })
 
         const arrayOfFollowingId = getAllPeopleTheUserIsFollowing.map((user)=>{
@@ -77,6 +79,7 @@ router.get('/feed', asyncHandler(async (req, res) => {
             },
             include: { model: db.User, as: 'user' },
             limit: 20,
+            order:  [['updatedAt', 'DESC']],
         })
         console.log("all posts the user is following", allPostsThatUserIsFollowing);
     }
