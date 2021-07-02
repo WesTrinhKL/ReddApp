@@ -3,6 +3,7 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
 const { requireAuth, loginUser, logoutUser, restoreUser } = require('../auth');
 const db = require('../db/models');
+const { Op } = require("sequelize");
 
 const router = express.Router();
 const { Comment } = db;
@@ -48,9 +49,9 @@ router.get('/feed', asyncHandler(async (req, res) => {
         attributes: ['id','header', 'content'],
         include: { model: db.User, as: 'user' }
     })
-    allPosts.forEach(post => {
-        console.log('id is:',post.id)
-    })
+    // allPosts.forEach(post => {
+    //     console.log('id is:',post.id)
+    // })
     const user = res.locals.user
 
 
@@ -69,7 +70,6 @@ router.get('/feed', asyncHandler(async (req, res) => {
 ));
 
 router.get("/feed/:id(\\d+)", requireAuth, csrfProtection, asyncHandler(async (req, res) => {
-
     const postId = parseInt(req.params.id, 10);
     const post = await db.Post.findByPk(postId);
     if (req.session.auth) {
@@ -108,25 +108,26 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
         const postId = parseInt(req.params.id, 10);
         const post = await db.Post.findByPk(postId);
         const userId = req.session.auth.userId
-
-
         const originalPoster = post.userId;
         const originalUser = await db.User.findByPk(originalPoster);
+        
         const allComments = await db.Comment.findAll({
+            order: [
+                ['id', 'DESC'],
+            ],
             attributes: ['id', 'content', 'userId', 'postId'],
             include: { model: db.User, as: 'user' },
+            
+           
         })
-        const comment = db.Comment.build() //CREATE EMPTY COMMENT INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
-
-
-
-
+        const comment = await db.Comment.build() //CREATE EMPTY COMMENT INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
         res.render('create-comment', {
             title: '',
             comment,
             postId,
             userId,
             post,
+         
             originalUser,
             allComments,
         })
@@ -152,7 +153,7 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
     const validationErrors = validationResult(req);
     if (validationErrors.isEmpty()) {
         await comment.save();
-        res.redirect(`/posts/feed/${postId}/comments`);
+        res.redirect(`/posts/feed/${postId}/comments`)
     } else {
         const errors = validationErrors.array().map((error) => error.msg);
         res.render('create-comment', {
@@ -172,9 +173,13 @@ router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res)
         const originalUser = await db.User.findByPk(originalPoster);
     
         const allComments = await db.Comment.findAll({
+            order: [
+                ['id', 'DESC'],
+            ],
             attributes: ['id', 'content', 'userId', 'postId'],
             include: { model: db.User, as: 'user' },
         })
+
         const comment = db.Comment.build()
         const user = res.locals.user
         res.render('comment', {
