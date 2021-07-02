@@ -6,6 +6,12 @@ block content
     div(class="comment" id=`post-${postId}`)
       div(class="comment-heading")
         div(class="comment-voting")
+          button(type="button")
+            span(aria-hidden="true") &#9650
+            span(class="sr-only") Vote Up 
+          button(type="button")
+            span(aria-hidden="true") &#9660
+            span(class="sr-only") Vote Down 
         div(class="comment-info")
           a(href="#" class="comment-author")=originalUser.username
           p(id=`time-${postId}` class="m-0") loading...
@@ -32,7 +38,7 @@ block content
             div(class="comment" id=`comment-${comment.id}`)
                 div(class="comment-info-responses")
                     a(href="#" class="comment-author-responses")=comment.user.username
-                    p(id=`time-${comment.id}` class="m-0")=`${comment.user.username}'s comment`
+                    p(id=`time-${comment.id}` class="m-0")=`${comment.user.username}'s comment: `
                     div(id=`timePosted-${comment.id}` style="display: none;")=comment.createdAt
                     div(id='thiscommentId' style="display: none;")=comment.id
                 script 

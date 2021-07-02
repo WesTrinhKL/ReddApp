@@ -27,7 +27,6 @@ block content
         p=post.content
         p 
           a(href=`/posts/feed/${postId}/create-comment` class="button3") Comment
-          a(href=`/posts/feed/${postId}/comments/` class="button3" id=`posts/feed/${postId}/comments/${comment.id}`) Delete
 
             
 
@@ -39,7 +38,7 @@ block content
             div(class="comment" id=`comment-${comment.id}`)
                 div(class="comment-info-responses")
                     a(href="#" class="comment-author-responses")=comment.user.username
-                    p(id=`time-${comment.id}` class="m-0")=`${comment.user.username}'s comment`
+                    p(id=`time-${comment.id}` class="m-0")=`${comment.user.username}'s comment: `
                     div(id=`timePosted-${comment.id}` style="display: none;")=comment.createdAt
                     div(id='thiscommentId' style="display: none;")=comment.id
                         
