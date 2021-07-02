@@ -26,19 +26,39 @@ button:active {
     background-color: #ecf0f1;
 }
 .comment-thread {
+    width: 750px;
+    max-width: 100%;
+    margin: auto;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px transparent; /* Removes margin collapse */
+    border-radius: 15px;
+}
+
+#comment-submission-form {
     width: 700px;
     max-width: 100%;
     margin: auto;
-    padding: 0 30px;
+    padding: 0 0px;
+    background-color: #fff;
+    border: 1px solid transparent;
+}
+
+.comment-thread-responses {
+    width: 700px;
+    max-width: 100%;
+    margin: auto;
+    padding: 0 0px;
     background-color: #fff;
     border: 1px solid transparent; /* Removes margin collapse */
 }
+
 .m-0 {
     margin: 0;
 }
 .sr-only {
     position: absolute;
-    left: -10000px;
+    left: -1px;
     top: auto;
     width: 1px;
     height: 1px;
@@ -57,6 +77,18 @@ button:active {
     height: 50px;
     font-size: 14px;
 }
+
+.comment-heading-responses {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 50px;
+    align-items: center;
+    height: 50px;
+    font-size: 25px;
+    overflow: hidden;
+    height:auto;
+}
+
 .comment-voting {
     width: 20px;
     height: 32px;
@@ -75,14 +107,54 @@ button:active {
     color: rgba(0, 0, 0, 0.5);
     margin-left: 10px;
 }
+
+.comment-info-responses {
+    color: rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+}
 .comment-author {
     color: rgba(0, 0, 0, 0.85);
     font-weight: bold;
     text-decoration: none;
 }
+
+.comment-author-responses {
+    margin-right: 10px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: bold;
+    text-decoration: none;
+}
+
 .comment-author:hover {
     text-decoration: underline;
 }
 .replies {
     margin-left: 20px;
+}
+
+.button3{
+display:inline-block;
+height: 27px;
+width: 80px;
+font-size: 12px;
+padding:0.3em 0.3em;
+margin:0 0.3em 0.3em 0;
+border-radius:2em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color:#FFFFFF;
+background-color:#4eb5f1;
+text-align:center;
+transition: all 0.2s;
+}
+.button3:hover{
+background-color:#4095c6;
+}
+@media all and (max-width:30em){
+ .button3{
+display:block;
+margin:0.2em auto;
+}
 }
