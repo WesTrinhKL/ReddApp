@@ -21,9 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'commentId'
     })
     User.hasMany(models.Follow, {
+      as: 'followBelongsToUser',
       foreignKey: 'followBelongsToUserID'
     })
     User.hasMany(models.Follow, {
+      as: 'followerUserID',
       foreignKey: 'followerUserID'
     })
   };

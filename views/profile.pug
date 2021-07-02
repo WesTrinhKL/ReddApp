@@ -15,15 +15,15 @@ block content
         img(class='profile-image' src='../../images/bartcoder.png' alt="profile img")
         div.user-info-container
           div.user-info-container__details
-            div.username=viewingUser.username
+            div.username=userBeingViewed.username
             div.profession Software Engineer
             div.location Los Angeles, CA
           div.user-details__buttons
-            if (locals.authenticated && viewingUser.id !== locals.user.id) || !locals.authenticated
-              if !locals.authenticated
-                button(class="follow-button can-follow" value=viewingUser.id) Follow
+            if (locals.authenticated && userBeingViewed.id !== locals.user.id) || !locals.authenticated
+              if !follow
+                button(class=buttonClass class='user-follow-btn' id=userBeingViewed.id value=buttonClass) #{text}
               else
-                button(class="unfollow-button can-follow" value=viewingUser.id) &#10003; Following
+                button(class=buttonClass class='user-follow-btn' id=userBeingViewed.id value=buttonClass) &#10003; Following
 
 
     div.socials-container.grid-item-socials
@@ -102,11 +102,21 @@ block content
 
     div.posts-container.grid-item-posts
       div.user-posts
-        div.user-title #{viewingUser.username}'s Recent Posts
+        div.user-title #{userBeingViewed.username}'s Recent Posts
         hr.posts-hr
         div.post-outline post1
         div.post-outline post2
         div.post-outline post3
         div.post-outline post4
         div.post-outline post5
+    if (locals.authenticated && userBeingViewed.id === locals.user.id)
+      div.followers-container.grid-item-followers
+        div.followers-flex
+          div.followers-title
+            a(class="followers-link" href="" ) View Your Followers
+              <i class="fas fa-external-link-alt"></i>
+
+
+
+
   script(src="../../javascripts/follow.js")
