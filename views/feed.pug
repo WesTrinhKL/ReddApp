@@ -1,23 +1,64 @@
 extends layout.pug
-include utils.pug
+block styles
+  link(rel="stylesheet" href="/stylesheets/feed.css")
+
+
+
 block content
-    //- link(rel="stylesheet" href="/stylesheets/feed.css")
-    div.content-container
-        h1.title Latest Posts
-            each post in allPosts
-                div.post-container
-                    div.post-title-preview
-                        h3
-                            a(style="color: #F0AD8E", href=`/posts/feed/${post.id}/create-comment`)= post.header
-                        div.content-preview
-                            h2= post.content
-                        div.user-posted
-                            p(post-container__user-font) posted by user:
-                                span #{post.user.username}
-                                 br
-                                a(href=`/posts/feed/${post.id}/edit`)
-                                        i Edit
-                    hr
-                div.buttons
-                    button(id=`like-${post.id}`) Like
-                    a(id=`comment-${post.id}` href=`/posts/feed/${post.id}/create-comment`) Comment
+    div.all-feed-container
+        div.content-container
+            //- h1.title Latest Posts
+            div.tab
+                button.tablinks(onclick="viewTab(event, 'allPosts')" id="allPostsDefault") All Posts
+                if allPostsThatUserIsFollowing
+                    button.tablinks(onclick="viewTab(event, 'following')" ) Following
+                //- button.tablinks(onclick="viewTab(event, 'resources')") Resources
+
+            div(class="all-posts-container tabcontent" id="allPosts")
+                each post in allPosts
+                    div.post-container
+                        div.post-items
+                            div.post-title-preview
+                            div.post-comment-view-button
+                                a(href=`/posts/feed/${post.id}/create-comment`)= post.header
+                            div.content-posted-by-container
+                                div.content-posted-by__user-link posted by user:
+                                    a(href=`/users/profile/${post.user.id}`)   #{ post.user.username}
+                            div.content-preview
+                                div.content-preview__text= post.content
+
+                            div.content-crud-feature-container
+                                div.content-like-post__link
+                                    a(class='like-button' href='/' id=`like-${post.id}`)
+                                        <i class="like-icon fas fa-thumbs-up"></i>
+                                //- div.content-edit-post__link
+                                //-     //- insert icons
+                                //-     a(href=`/posts/feed/${post.id}/edit`) Edit
+                                div.content-comment-post__link
+                                    a(class='comment-button' id=`comment-${post.id}` href=`/posts/feed/${post.id}/create-comment`)
+                                        <i class="comment-icon fas fa-comments"></i>
+            if allPostsThatUserIsFollowing
+                div(class="all-posts-container tabcontent" id="following")
+                    each post in allPostsThatUserIsFollowing
+                        div.post-container
+                            div.post-items
+                                div.post-title-preview
+                                div.post-comment-view-button
+                                    a(href=`/posts/feed/${post.id}/create-comment`)= post.header
+                                div.content-posted-by-container
+                                    div.content-posted-by__user-link posted by user:
+                                        a(href=`/users/profile/${post.user.id}`)   #{ post.user.username}
+                                div.content-preview
+                                    div.content-preview__text= post.content
+
+                                div.content-crud-feature-container
+                                    div.content-like-post__link
+                                        a(class='like-button' href='/' id=`like-${post.id}`)
+                                            <i class="like-icon fas fa-thumbs-up"></i>
+                                    //- div.content-edit-post__link
+                                    //-     //- insert icons
+                                    //-     a(href=`/posts/feed/${post.id}/edit`) Edit
+                                    div.content-comment-post__link
+                                        a(class='comment-button' id=`comment-${post.id}` href=`/posts/feed/${post.id}/create-comment`)
+                                            <i class="comment-icon fas fa-comments"></i>
+    script(src="../../javascripts/feed.js")

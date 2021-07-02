@@ -215,8 +215,7 @@ router.get('/followers' , asyncHandler(async(req,res)=>{
         followerUserID: loggedInUserID
       },
       include:[{
-        model: User,
-
+        model: db.User,
       }]
     })
   }

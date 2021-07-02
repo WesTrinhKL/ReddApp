@@ -43,26 +43,55 @@ router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req
 
 router.get('/feed', asyncHandler(async (req, res) => {
 
-
-    const allPosts = await db.Post.findAll({
-        attributes: ['id','header', 'content'],
-        include: { model: db.User, as: 'user' }
-    })
-    allPosts.forEach(post => {
-        console.log('id is:',post.id)
-    })
     const user = res.locals.user
 
+    //@Notes: gets all the normal posts
+    const allPosts = await db.Post.findAll({
+        attributes: ['id','header', 'content'],
+        include: { model: db.User, as: 'user' },
+        limit: 20,
+    })
+
+    //@Notes: if logged in, grab posts where user is following those poeple
+    let allPostsThatUserIsFollowing;
+    if(req.session.auth){
+        const getAllPeopleTheUserIsFollowing = await db.Follow.findAll({
+            where:{
+                followerUserID: req.session.auth.userId,
+            },
+            attributes: ['followBelongsToUserID']
+        })
+
+        const arrayOfFollowingId = getAllPeopleTheUserIsFollowing.map((user)=>{
+            return user['followBelongsToUserID'];
+        })
+
+        console.log("this is the array data of following id", arrayOfFollowingId)
+        console.log("this is the array data of following id", arrayOfFollowingId)
+        console.log("this is the array data of following id", arrayOfFollowingId)
+
+
+        allPostsThatUserIsFollowing = await db.Post.findAll({
+            where:{
+                userId: arrayOfFollowingId
+            },
+            include: { model: db.User, as: 'user' },
+            limit: 20,
+        })
+        console.log("all posts the user is following", allPostsThatUserIsFollowing);
+    }
 
     if (req.session.auth) {
         res.render('feed', {
             Title: `${user.username} Feed`,
             allPosts,
+            allPostsThatUserIsFollowing,
         })
     } else {
         res.render('feed', {
             Title: 'Global Feed',
             allPosts,
+            allPostsThatUserIsFollowing,
         })
     }
 }
