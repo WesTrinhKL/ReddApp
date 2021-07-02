@@ -45,13 +45,12 @@ router.get('/feed', asyncHandler(async (req, res) => {
 
 
     const allPosts = await db.Post.findAll({
-
-        attributes: ['id', 'header', 'content'],
+        attributes: ['id','header', 'content'],
         include: { model: db.User, as: 'user' }
     })
-    // allPosts.forEach(post => {
-    //     console.log(post.id)
-    // })
+    allPosts.forEach(post => {
+        console.log('id is:',post.id)
+    })
     const user = res.locals.user
 
 
