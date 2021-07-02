@@ -1,0 +1,10 @@
+extends layout.pug
+include utils.pug
+
+block styles
+  link(rel="stylesheet" href="/stylesheets/post-delete.css")
+
+
+block content
+    h1.remove-post= Your post has been removed.
+        a(class='link' href="/feed") take me back to my feed!

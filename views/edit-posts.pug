@@ -12,8 +12,10 @@ block content
                 p(contenteditable="true" class='content')=post.content
             div(contenteditable="true" class='comment-div')
                 textarea(class='textarea-comment' contenteditable="true")
-            input(type='button' value='Edit Header' class="headerbttn")
-            input(type='button' value='Edit Content' class='contentbttn')
+            a(href='/feed/:id(\\d+)/edit' )
+                button(class="headerbttn") Edit Header
+            a(href='/feed/:id(\\d+)/edit')
+                button(class='contentbttn') Edit Post
             script.
                  document.querySelector('.headerbttn').addEventListener('click', () => { document.querySelector('h1').innerHTML =
                  document.querySelector('.textarea-comment').value})

@@ -1,7 +1,8 @@
 extends layout.pug
 include utils.pug
+block styles
+    link(rel="stylesheet" href="/stylesheets/feed.css")
 block content
-    //- link(rel="stylesheet" href="/stylesheets/feed.css")
     div.content-container
         h1.title Latest Posts
             each post in allPosts
@@ -21,3 +22,4 @@ block content
                 div.buttons
                     button(id=`like-${post.id}`) Like
                     a(id=`comment-${post.id}` href=`/posts/feed/${post.id}/create-comment`) Comment
+                    a(id=`delete-${post.id}` href=`/posts/feed/${post.id}/delete`) Remove
