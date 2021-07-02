@@ -1,27 +1,31 @@
 extends layout.pug
 include utils.pug
 block content
-  h1= post.userId
-  h2= user.id
+    //- script(type='text/javascript' src='./update-content.js').
+
     if user.id === post.userId
         div.post-container
-            p
-                i=`Posted by user ${user.username}`
-            div.header
-                h1=post.header
-            div.content
-                p=post.content
-            div.comment
-                textarea(id='textarea-comment')
-            button(type=submit) Edit Post
+            i=`Posted by user ${user.username}`
+            div(contenteditable="true" class='header-div')
+                h1(contenteditable="true" class='header')=post.header
+            div(contenteditable="true" class='content-div')
+                p(contenteditable="true" class='content')=post.content
+            div(contenteditable="true" class='comment-div')
+                textarea(class='textarea-comment' contenteditable="true")
+            input(type='button' value='Edit Header' class="headerbttn")
+            input(type='button' value='Edit Content' class='contentbttn')
+            script.
+                 document.querySelector('.headerbttn').addEventListener('click', () => { document.querySelector('h1').innerHTML =
+                 document.querySelector('.textarea-comment').value})
+                 document.querySelector('.contentbttn').addEventListener('click', () => { document.querySelector('p').innerHTML =
+                 document.querySelector('.textarea-comment').value})
+
     else
         div.post-container
             p
                 i=`Posted by user ${user.username}`
             div.header
-                h1=post.header
-            div.content
-                p=post.content
-            div.comment
-                textarea(id='textarea-comment')
-            button(type=submit) Cannot edit
+                h1(class='h1')=post.header
+            div
+                p(class='p')=post.content
+                    i= 'cannot edit'

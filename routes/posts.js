@@ -13,7 +13,7 @@ router.get('/', csrfProtection, asyncHandler(async (req, res) => {
 }))
 
 router.get('/create-post', csrfProtection, asyncHandler(async (req, res) => {
-    
+
     const post = await db.Post.build();
     res.render('post', {
         title: 'Create New Post',
@@ -110,11 +110,11 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
         const post = await db.Post.findByPk(postId);
         const userId = req.session.auth.userId
 
-        
+
         const comment = db.Comment.build() //CREATE EMPTY COMMENT INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
 
 
-    
+
 
         res.render('create-comment', {
             title: '',
@@ -156,7 +156,7 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
     }
 }))
 
-router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res) => {
+router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req, res) => {
     const allComments = await db.Comment.findAll({
         attributes: ['id', 'content', 'userId', 'postId'],
         include: { model: db.User, as: 'user' },
@@ -186,18 +186,41 @@ router.get('/feed/:id(\\d+)/edit', requireAuth, asyncHandler(async (req, res) =>
         user,
     })
 }))
-router.post('/feed/:id(\\d+)/edit', csrfProtection, commentValidator, asyncHandler(async (req, res) => {
+router.post('/feed/:id(\\d+)/edit', csrfProtection, requireAuth, asyncHandler(async (req, res) => {
     const postId = parseInt(req.params.id, 10)
-    const post = await db.Post.findByPk(postId)
-    const { userId } = req.session.auth;
+    const postToUpdate = await db.Post.findByPk(postId)
     const user = await db.User.findByPk(userId);
-    if (postId == userId) {
-        res.render('edit-posts', {
-            title: "Edit Post",
-            post,
-            csrfToken: req.csrfToken(),
-        })
+    const { header, content } = req.body
+    const { userId } = req.session.auth
+    const newPost = {
+        header,
+        content,
+        userId,
     }
+
+    const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()) {
+        await postToUpdate.update(newPost);
+        await postToUpdate.save();
+        res.redirect(`/feed/${postId}`);
+    } else {
+        const errors = validatorErrors.array().map((error) => error.msg);
+        res.render('edit-posts', {
+            title: 'Edit Post',
+            post: { ...newPost, id: postId },
+            errors,
+            csrfToken: req.csrfToken(),
+        });
+    }
+    // const user = await db.User.findByPk(userId);
+    // if (postId == userId) {
+    //     res.render('edit-posts', {
+    //         title: "Edit Post",
+    //         post,
+    //         csrfToken: req.csrfToken(),
+    //     })
+    // }
 }))
 
 module.exports = router
