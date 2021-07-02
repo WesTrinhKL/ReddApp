@@ -130,9 +130,15 @@ router.post('/login', csrfProtection, loginValidators,
     });
   }));
 
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
   logoutUser(req, res);
-  res.redirect('/users/login');
+  req.session.save(error => {
+    if(error){
+      next(error)
+    } else {
+      return res.redirect('/users/login');
+    }
+  })
 });
 
 router.get('/demo', (async (req, res) => {
