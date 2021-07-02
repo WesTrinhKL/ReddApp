@@ -22,6 +22,4 @@ function myTimer() {
             timeDiv.innerHTML = `Posted ${days} days ago`
         }
     }
-window.addEventListener('click', e => {
-    setTimeout(myTimer, 500);
-}) 
+setTimeout(myTimer, 500);
