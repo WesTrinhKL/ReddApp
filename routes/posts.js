@@ -13,29 +13,25 @@ router.get('/', csrfProtection, asyncHandler(async (req, res) => {
 }))
 
 router.get('/create-post', csrfProtection, asyncHandler(async (req, res) => {
-
     const post = await db.Post.build();
     res.render('post', {
         title: 'Create New Post',
         post,
         csrfToken: req.csrfToken(),
     })
-
-
 }))
-
 router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
-
     if (req.session.auth) {
         const { userId } = req.session.auth
         const { header, content } = req.body;
         const post = await db.Post.build({ header, content, userId });
         await post.save();
-        res.render('post', {
-            Title: 'Your Feed',
-            post,
-            csrfToken: req.csrfToken()
-        });
+        // res.render('post', {
+        //     Title: 'Your Feed',
+        //     post,
+        //     csrfToken: req.csrfToken()
+        // });
+        res.redirect('/posts/feed')
     } else {
         res.redirect('/');
     }
