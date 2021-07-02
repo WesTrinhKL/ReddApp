@@ -1,13 +1,6 @@
+/* global variables and styles */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 
-@font-face {
-  font-family: "Ruhl";
-  src: url("fonts/FrankRuhlLibre-Regular.ttf");
-}
-
-@font-face {
-  font-family: "Ruhl Medium";
-  src: url("fonts/FrankRuhlLibre-Medium.ttf");
-}
 
 * {
   box-sizing: border-box;

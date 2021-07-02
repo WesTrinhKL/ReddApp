@@ -43,14 +43,17 @@ router.post('/create-post', requireAuth, csrfProtection, asyncHandler(async (req
 
 router.get('/feed', asyncHandler(async (req, res) => {
 
+
     const allPosts = await db.Post.findAll({
-        attributes: ['id','header', 'content'],
+
+        attributes: ['id', 'header', 'content'],
         include: { model: db.User, as: 'user' }
     })
-    allPosts.forEach(post => {
-        console.log('id is:',post.id)
-    })
+    // allPosts.forEach(post => {
+    //     console.log(post.id)
+    // })
     const user = res.locals.user
+
 
     if (req.session.auth) {
         res.render('feed', {
@@ -106,8 +109,13 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
         const postId = parseInt(req.params.id, 10);
         const post = await db.Post.findByPk(postId);
         const userId = req.session.auth.userId
-        
-        const comment = db.Comment.build() //CREATE EMPTY USER INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
+
+
+        const comment = db.Comment.build() //CREATE EMPTY COMMENT INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
+
+
+
+
         res.render('create-comment', {
             title: '',
             comment,
@@ -133,7 +141,7 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
         userId,
         postId,
     });
-    
+
     const validationErrors = validationResult(req);
     if (validationErrors.isEmpty()) {
         await comment.save();
@@ -148,7 +156,7 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
     }
 }))
 
-router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res) => {
+router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req, res) => {
     const allComments = await db.Comment.findAll({
         attributes: ['id', 'content', 'userId', 'postId'],
         include: { model: db.User, as: 'user' },
@@ -165,5 +173,54 @@ router.get('/feed/:id(\\d+)/comments', requireAuth, asyncHandler(async (req,res)
     }
 }))
 
+
+router.get('/feed/:id(\\d+)/edit', requireAuth, asyncHandler(async (req, res) => {
+    console.log(req.session.auth)
+    const postId = parseInt(req.params.id, 10)
+    const post = await db.Post.findByPk(postId)
+    const { userId } = req.session.auth;
+    const user = await db.User.findByPk(userId);
+    res.render('edit-posts', {
+        title: "Edit Post",
+        post,
+        user,
+    })
+}))
+router.post('/feed/:id(\\d+)/edit', csrfProtection, requireAuth, asyncHandler(async (req, res) => {
+    const postId = parseInt(req.params.id, 10)
+    const postToUpdate = await db.Post.findByPk(postId)
+    const user = await db.User.findByPk(userId);
+    const { header, content } = req.body
+    const { userId } = req.session.auth
+    const newPost = {
+        header,
+        content,
+        userId,
+    }
+
+    const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()) {
+        await postToUpdate.update(newPost);
+        await postToUpdate.save();
+        res.redirect(`/feed/${postId}`);
+    } else {
+        const errors = validatorErrors.array().map((error) => error.msg);
+        res.render('edit-posts', {
+            title: 'Edit Post',
+            post: { ...newPost, id: postId },
+            errors,
+            csrfToken: req.csrfToken(),
+        });
+    }
+    // const user = await db.User.findByPk(userId);
+    // if (postId == userId) {
+    //     res.render('edit-posts', {
+    //         title: "Edit Post",
+    //         post,
+    //         csrfToken: req.csrfToken(),
+    //     })
+    // }
+}))
 
 module.exports = router
