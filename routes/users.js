@@ -5,6 +5,7 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const { requireAuth, loginUser, logoutUser, restoreUser } = require('../auth');
 const { Comment } = db;
+const { Op } = require("sequelize");
 
 const router = express.Router();
 
@@ -68,7 +69,7 @@ router.post('/sign-up', csrfProtection, userValidator, asyncHandler(async (req, 
     user.hashedPassword = hashedPassword;
     await user.save();
     loginUser(req, res, user);
-    res.redirect('/users/profile');
+    res.redirect('/users/my-profile');
   } else {
     const errors = validationErrors.array().map((error) => error.msg);
     res.render('sign-up', {
@@ -146,9 +147,10 @@ router.get('/demo', (async (req, res) => {
   res.redirect('/');
 }));
 
-router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
-  // console.log("local user", res.locals.user);
+router.get('/my-profile', requireAuth, asyncHandler(async (req, res) => {
+  // @feature: will fetch the user's own profile.
   if (req.session.auth) {
+     // console.log("local user", res.locals.user);
     const { userId } = req.session.auth;
     const user = await db.User.findByPk(userId);
 
@@ -156,12 +158,118 @@ router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
       res.render('profile.pug', {
         title: 'Profile Page',
         user,
+        userBeingViewed: user,
       });
     }
   } else {
     res.redirect('/users/login');
   }
+}));
+
+router.get('/profile/:id(\\d+)', asyncHandler(async (req, res) => {
+
+  const userId  = parseInt(req.params.id, 10);
+  const userBeingViewed = await db.User.findByPk(userId);
+  if(userBeingViewed){ //if user being viewed exists
+    const ourUser = res.locals.user
+
+    // console.log(`${userId} ${ourUser.id}`)
+    //default data if follower not found
+    let buttonClass = "follow-button";
+    let text= "Follow"
+
+    const follow = await db.Follow.findOne({ //find if user is following the one being viewed
+      where:{
+        [Op.and]: [
+          { followBelongsToUserID: userId },
+          { followerUserID: ourUser.id }
+        ]
+      }
+    })
+    if(follow){
+      buttonClass= "unfollow-button";
+      text = "Following";
+    }
+
+    // console.log("follow obj!!! ", follow)
+    res.render('profile.pug', {
+      title: 'Profile Page',
+      user: ourUser,
+      userBeingViewed,
+      buttonClass,
+      text,
+      follow,
+    });
+  }
+  else{
+    res.redirect('/');
+  }
+}));
+
+
+router.get('/followers' , asyncHandler(async(req,res)=>{
+  if(req.session.auth){
+    const loggedInUserID = req.session.auth.userId;
+    const followers = await db.Follow.findAll({
+      where: {
+        followerUserID: loggedInUserID
+      },
+      include:[{
+        model: User,
+
+      }]
+    })
+  }
+  else {
+    res.redirect('/users/login');
+  }
+
+}))
+
+router.get('/follow/:id(\\d+)', asyncHandler(async (req,res)=>{
+  const userToFollowID = parseInt(req.params.id, 10);
+  const loggedInUserID = req.session.auth.userId //.userId is placed in res from login in auth.js
+  //make sure user is authenticated and user ID is not itself.
+  if ((req.session.auth && userToFollowID !== loggedInUserID)){
+    //TODO: Verify that the relationship does not exist, if it does exist, send back status error 401;
+
+    //add the follow relationship to db. create the following record
+    const follow = await db.Follow.create({followBelongsToUserID:userToFollowID, followerUserID:loggedInUserID})
+    res.json({follow});
+  }
+}));
+
+router.delete('/follow/:id(\\d+)', asyncHandler(async (req,res,next)=>{
+  const userToUnfollowID = parseInt(req.params.id, 10);
+  const loggedInUserID = req.session.auth.userId
+  if ((req.session.auth && userToUnfollowID !== loggedInUserID)){
+    //TODO: Verify that the relationship does not exist, if it does exist, send back status error 401;
+    const follow = await db.Follow.findOne({
+      where:{
+        [Op.and]: [
+          { followBelongsToUserID: userToUnfollowID },
+          { followerUserID:loggedInUserID }
+        ]
+      }
+    })
+    if(follow){
+      await follow.destroy()
+      res.status(204).end();
+    }
+  }
+  else{
+    next(unfollowNotFoundError(userToUnfollowID));
+  }
 
 }));
+const unfollowNotFoundError = unfollow =>{
+  const err = Error('no valid unfollow request');
+  err.title = "unfollow not found";
+  err.status = 404;
+  return err;
+}
+
+
+
 
 module.exports = router;

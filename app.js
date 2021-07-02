@@ -18,18 +18,10 @@ const app = express();
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json()); //parses requests w/ json payload
+app.use(express.urlencoded({ extended: false }));//parses requests w/ incoming urlencoded payload
 const store = new SequelizeStore({ db: sequelize });
 store.sync();
-// app.use(
-//   session({
-//     secret: 'superSecret',
-//     store,
-//     saveUninitialized: false,
-//     resave: false,
-//   })
-//   );
 
 app.use(session({
   secret: sessionSecret,
@@ -38,12 +30,10 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.use(cookieParser(sessionSecret));
-  
-app.use(restoreUser);
+app.use(cookieParser(sessionSecret)); //parses cookies attached to client request
+
+app.use(restoreUser); //middleware to attach user obj to res
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: false }));
-app.use(logger('dev'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);

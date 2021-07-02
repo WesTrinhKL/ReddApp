@@ -1,7 +1,6 @@
 /* global variables and styles */
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -18,7 +17,7 @@ html {
   --header1: calc(1.5rem + 1vw);
   --header2: calc(3.5rem + 1vw);
   --header3: calc(3rem + 1vw);
-  --header4: calc(2.4rem + 1vw);
+  --sub-header: calc(1rem + 0.5vw);
   --text: calc(1.5rem + 0.5vw);
   --big: calc(8rem + 1vw);
   --special-color: #906272;
