@@ -22,4 +22,4 @@ function myTimer() {
             timeDiv.innerHTML = `Posted ${days} days ago`
         }
     }
-setTimeout(myTimer, 1000);
+setTimeout(myTimer, 500);

@@ -2,6 +2,7 @@ extends layout.pug
 
 include utils.pug
 block content
+
   link(rel="stylesheet" href="/stylesheets/comments.css")
   div(class="comment-thread")
     div(class="comment" id=`post-${postId}`)
@@ -20,22 +21,28 @@ block content
           div(id='thispostId' style="display: none;")=post.id
         script 
           include ../public/javascripts/post-time-script.js
+          
       div(class="comment-body")
         p=post.header
         p=post.content
         p 
-            a(href=`/posts/feed/${postId}/create-comment` class="button3") Comment
+          a(href=`/posts/feed/${postId}/create-comment` class="button3") Comment
 
+            
 
   div.comment-container 
-    each comment in allComments.reverse()
+    each comment in allComments
+      
+      if comment.postId === post.id
         div(class="comment-thread-responses")
             div(class="comment" id=`comment-${comment.id}`)
                 div(class="comment-info-responses")
-                    a(href="#" class="comment-author-responses")=originalUser.username
-                    p(id=`time-${comment.id}` class="m-0") loading...
-                    div(id=`timePosted-${comment.id}` style="display: none;")=post.createdAt
+                    a(href="#" class="comment-author-responses")=comment.user.username
+                    p(id=`time-${comment.id}` class="m-0")=`${comment.user.username}'s comment: `
+                    div(id=`timePosted-${comment.id}` style="display: none;")=comment.createdAt
                     div(id='thiscommentId' style="display: none;")=comment.id
+                        
                 script 
                     include ../public/javascripts/comment-time-script.js
                 div(class="comment-heading-responses")=comment.content
+      else 
