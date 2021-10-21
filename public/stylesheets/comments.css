@@ -29,10 +29,21 @@ button:active {
     width: 750px;
     max-width: 100%;
     margin: auto;
-    padding: 30px;
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+    padding: 20px;
     background-color: #fff;
     border: 1px transparent; /* Removes margin collapse */
-    border-radius: 15px;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.comment-header {
+    font-size: 24px;
+    font-weight: bold;
+    color: gray;
+}
+.comment-content {
+    font-size: 15px;
 }
 
 #comment-submission-form {
@@ -43,14 +54,36 @@ button:active {
     background-color: #fff;
     border: 1px solid transparent;
 }
+.comment-submit {
+    margin-top: 6px;
+    border-radius: 16px;
+    border: 1px solid #ffffff;
+    cursor: pointer;
+    padding: 2px;
+    color: white;
+    background-color: #b97575;
+    width: 8rem;
+    height: 2.6rem;
+    font-size: small;
+    font-family:'Roboto',sans-serif;
+
+}
+.comment-submit:hover {
+    background-color: rgb(185, 148, 148);
+}
+
 
 .comment-thread-responses {
-    width: 700px;
+    width: 750px;
     max-width: 100%;
     margin: auto;
+    margin-top: 6px;
     padding: 0 0px;
     background-color: #fff;
     border: 1px solid transparent; /* Removes margin collapse */
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border-radius: 16px;
+
 }
 
 .m-0 {
@@ -134,10 +167,11 @@ button:active {
 
 .button3{
 display:inline-block;
-height: 27px;
+height: 25px;
 width: 80px;
 font-size: 12px;
 padding:0.3em 0.3em;
+padding-top: 4px;
 margin:0 0.3em 0.3em 0;
 border-radius:2em;
 box-sizing: border-box;
@@ -148,6 +182,7 @@ color:#FFFFFF;
 background-color:#4eb5f1;
 text-align:center;
 transition: all 0.2s;
+margin-top: 12px;
 }
 .button3:hover{
 background-color:#4095c6;
@@ -157,4 +192,11 @@ background-color:#4095c6;
 display:block;
 margin:0.2em auto;
 }
+}
+.comment-body {
+    word-wrap: break-word;
+
+}
+.form-control {
+    width: 100%;
 }

@@ -5,10 +5,8 @@ block styles
 block content
     div.post-content-container
         p
-            i(id='user')=`Posted by user ${user.username}`
+            i(class='user-create-post')=`Posted by ${user.username}`
         form(action='/posts/create-post' method='post')
             include post-form-fields.pug
             div(class='py-4')
             button(type='submit' class='btn btn-primary') Add Post
-
-            

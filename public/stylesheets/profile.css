@@ -185,7 +185,8 @@ body{
   border-radius: .30rem;
   width: 100%;
   min-width: 20%;
-  height: 100%;
+  height: 97%;
+  overflow: hidden;
 }
 .user-title{
   font-size: var(--header3);
@@ -196,7 +197,7 @@ body{
 .posts-hr{
   width: 90%;
   margin: 0 auto;
-  color: gray
+  color: lightgray;
 }
 .post-outline{
   margin:20px auto 20px auto;
@@ -207,7 +208,20 @@ body{
   border-radius: .30rem;
   width: 90%;
   min-width: 20%;
-  height: 100%;
+  min-height: 100px;
+  overflow: hidden;
+}
+.post-header {
+    font-size: 18px;
+    margin: 6px;
+    font-weight: bold;
+}
+.post-content {
+    margin-left: 6px;
+    margin-right: 6px;
+    font-size: 14px;
+    overflow-wrap: break-word;
+
 }
 /* ---skills--- */
 .user-skills {

@@ -100,11 +100,12 @@ block content
       div.user-posts
         div.user-title #{userBeingViewed.username}'s Recent Posts
         hr.posts-hr
-        div.post-outline post1
-        div.post-outline post2
-        div.post-outline post3
-        div.post-outline post4
-        div.post-outline post5
+        ul
+          each post in currentUserPosts
+            div.post-outline
+              div.post-header=post.header
+              div.post-content=post.content
+
     if (locals.authenticated && userBeingViewed.id === locals.user.id)
       div.followers-container.grid-item-followers
         div.followers-flex
