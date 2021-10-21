@@ -49,31 +49,31 @@ router.get('/feed', asyncHandler(async (req, res) => {
         order:  [['updatedAt', 'DESC']],
     })
 
-    //@Notes: if logged in, grab posts where user is following those poeple
+    //@Notes: if logged in, grab posts where user is following those people
     let allPostsThatUserIsFollowing;
-    if(req.session.auth){
-        const getAllPeopleTheUserIsFollowing = await db.Follow.findAll({
-            where:{
-                followerUserID: req.session.auth.userId,
-            },
-            attributes: ['followBelongsToUserID'],
+    // if(req.session.auth){
+    //     const getAllPeopleTheUserIsFollowing = await db.Follow.findAll({
+    //         where:{
+    //             followerUserID: req.session.auth.userId,
+    //         },
+    //         attributes: ['followBelongsToUserID'],
 
-        })
+    //     })
 
-        const arrayOfFollowingId = getAllPeopleTheUserIsFollowing.map((user)=>{
-            return user['followBelongsToUserID'];
-        })
+    //     const arrayOfFollowingId = getAllPeopleTheUserIsFollowing.map((user)=>{
+    //         return user['followBelongsToUserID'];
+    //     })
 
-        allPostsThatUserIsFollowing = await db.Post.findAll({
-            where:{
-                userId: arrayOfFollowingId
-            },
-            include: { model: db.User, as: 'user' },
-            limit: 20,
-            order:  [['updatedAt', 'DESC']],
-        })
-        console.log("all posts the user is following", allPostsThatUserIsFollowing);
-    }
+    //     allPostsThatUserIsFollowing = await db.Post.findAll({
+    //         where:{
+    //             userId: arrayOfFollowingId
+    //         },
+    //         include: { model: db.User, as: 'user' },
+    //         limit: 20,
+    //         order:  [['updatedAt', 'DESC']],
+    //     })
+    //     console.log("all posts the user is following", allPostsThatUserIsFollowing);
+    // }
 
     if (req.session.auth) {
         res.render('feed', {
@@ -132,15 +132,15 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
         const userId = req.session.auth.userId
         const originalPoster = post.userId;
         const originalUser = await db.User.findByPk(originalPoster);
-        
+
         const allComments = await db.Comment.findAll({
             order: [
                 ['id', 'DESC'],
             ],
             attributes: ['id', 'content', 'userId', 'postId'],
             include: { model: db.User, as: 'user' },
-            
-           
+
+
         })
         const comment = await db.Comment.build() //CREATE EMPTY COMMENT INSTANCE, VIEW BELOW WILL INITIALLY RENDER EMPTY USER FIELDS
         res.render('create-comment', {
@@ -149,7 +149,7 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
             postId,
             userId,
             post,
-         
+
             originalUser,
             allComments,
         })

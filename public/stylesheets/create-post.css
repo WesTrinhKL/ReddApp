@@ -7,6 +7,10 @@
     color: rgba(0, 0, 0, 0.85);
     background-color: #f9f9f9;
 }
+.user-create-post {
+    margin-bottom: 10px;
+
+}
 button {
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -28,17 +32,19 @@ button:active {
     width: 750px;
     max-width: 100%;
     margin: auto;
+    margin-top: 5%;
     padding: 30px;
     background-color: #fff;
     border: 1px transparent; /* Removes margin collapse */
     border-radius: 15px;
+    text-align: center;
 }
 .form-container {
     width: 700px;
     max-width: 100%;
     margin: auto;
     padding: 0 0px;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     border: 1px solid transparent;
 }
 @media all and (max-width:30em){
@@ -47,3 +53,13 @@ button:active {
     margin:0.2em auto;
     }
     }
+textarea {
+    resize: none;
+
+}
+.form-control {
+    width: 60%;
+}
+#content.form-control {
+    margin-right: 6px;
+}
