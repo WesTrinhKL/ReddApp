@@ -185,7 +185,8 @@ body{
   border-radius: .30rem;
   width: 100%;
   min-width: 20%;
-  height: 100%;
+  height: 97%;
+  overflow: hidden;
 }
 .user-title{
   font-size: var(--header3);
@@ -219,6 +220,7 @@ body{
     margin-left: 6px;
     margin-right: 6px;
     font-size: 14px;
+    overflow-wrap: break-word;
 
 }
 /* ---skills--- */

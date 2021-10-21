@@ -8,30 +8,30 @@ block content
         div(class="comment-voting")
           button(type="button")
             span(aria-hidden="true") &#9650
-            span(class="sr-only") Vote Up 
+            span(class="sr-only") Vote Up
           button(type="button")
             span(aria-hidden="true") &#9660
-            span(class="sr-only") Vote Down 
+            span(class="sr-only") Vote Down
         div(class="comment-info")
           a(href="#" class="comment-author")=originalUser.username
           p(id=`time-${postId}` class="m-0") loading...
           div(id=`timePosted-${postId}` style="display: none;")=post.createdAt
           div(id='thispostId' style="display: none;")=post.id
-        script 
+        script
           include ../public/javascripts/post-time-script.js
       div(class="comment-body")
-        p=post.header
-        p=post.content
+        p.comment-header=post.header
+        p.comment-content=post.content
       div(id="comment-submission-form")
         link(rel="stylesheet" href="/stylesheets/comments.css")
         +validationErrorSummary(errors)
-        form(action=`/posts/feed/${postId}/create-comment` method='post')
-            +field("Comment: ", "content", comment.content, false)
+        form(action=`/posts/feed/${postId}/create-comment` method='post' class="comment-submission")
+            +field( `Comment as ${user.username}: `, "content", comment.content, false)
             input(type='hidden' name='userId' value=userId)
             input(type='hidden' name='postId' value=postId)
-            input(type="submit" value="Submit")
+            input(type="submit" value="Submit" class="comment-submit")
 
-  div.comment-container 
+  div.comment-container
     each comment in allComments
       if comment.postId === post.id
         div(class="comment-thread-responses")
@@ -41,7 +41,7 @@ block content
                     p(id=`time-${comment.id}` class="m-0")=`${comment.user.username}'s comment: `
                     div(id=`timePosted-${comment.id}` style="display: none;")=comment.createdAt
                     div(id='thiscommentId' style="display: none;")=comment.id
-                script 
+                script
                     include ../public/javascripts/comment-time-script.js
                 div(class="comment-heading-responses")=comment.content
-      else 
+      else
