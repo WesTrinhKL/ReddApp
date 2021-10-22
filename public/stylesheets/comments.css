@@ -54,6 +54,10 @@ button:active {
     background-color: #fff;
     border: 1px solid transparent;
 }
+.comment-submission {
+    font-style: italic;
+    font-size: 12px;
+}
 .comment-submit {
     margin-top: 6px;
     border-radius: 16px;
