@@ -1,5 +1,5 @@
 # Express.js Jade/Pug Project
-##Live Link: https://reddappp.herokuapp.com/posts/feed
+Live Link: https://reddappp.herokuapp.com/posts/feed
 
 ## ReddApp
 
