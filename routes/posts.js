@@ -158,6 +158,7 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
 }));
 
 router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(async (req, res) => {
+
     const {
         content,
         userId,
@@ -170,6 +171,11 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
         postId,
     });
 
+    const like = db.Like.build({
+        userId,
+        postId,
+    })
+
     const validationErrors = validationResult(req);
     if (validationErrors.isEmpty()) {
         await comment.save();
@@ -179,6 +185,7 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
         res.render('create-comment', {
             title: 'user-comment',
             comment,
+            like,
             errors,
         })
     }
