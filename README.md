@@ -1,7 +1,10 @@
-# Express.js Jade/Pug Project
+# ReddApp
 Live Link: https://reddappp.herokuapp.com/posts/feed
 
-## ReddApp
+## Technology
+Express.js | Node.js | Pug | CSS3
+
+## About
 
 RedApp is a fullstack Express app with user authentication along with CRUD functionality of users' posts, comments, and the option  to follow other users.
 ***
