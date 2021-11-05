@@ -153,6 +153,15 @@ router.get('/my-profile', requireAuth, asyncHandler(async (req, res) => {
      // console.log("local user", res.locals.user);
     const { userId } = req.session.auth;
     const user = await db.User.findByPk(userId);
+    const userBeingViewed = await db.User.findByPk(userId);
+    const viewedUsersPosts = await db.Post.findAll({
+      where:{
+          userId: userBeingViewed.id
+      },
+      attributes: ['id','header', 'content'],
+      include: { model: db.User, as: 'user' },
+      order:  [['updatedAt', 'DESC']],
+  });
 
     if (user) {
 
@@ -165,9 +174,11 @@ router.get('/my-profile', requireAuth, asyncHandler(async (req, res) => {
         limit: 20,
         order:  [['updatedAt', 'DESC']],
     })
+
       res.render('profile.pug', {
         title: 'Profile Page',
         user,
+        viewedUsersPosts,
         userBeingViewed: user,
         currentUserPosts
       });
@@ -181,10 +192,20 @@ router.get('/profile/:id(\\d+)', asyncHandler(async (req, res) => {
 
   const userId  = parseInt(req.params.id, 10);
   const userBeingViewed = await db.User.findByPk(userId);
+  const viewedUsersPosts = await db.Post.findAll({
+    where:{
+        userId: userBeingViewed.id
+    },
+    attributes: ['id','header', 'content'],
+    include: { model: db.User, as: 'user' },
+    order:  [['updatedAt', 'DESC']],
+});
+
+
   if(userBeingViewed){ //if user being viewed exists
     const ourUser = res.locals.user
 
-    // console.log(`${userId} ${ourUser.id}`)
+
     //default data if follower not found
     let buttonClass = "follow-button";
     let text= "Follow"
@@ -203,11 +224,16 @@ router.get('/profile/:id(\\d+)', asyncHandler(async (req, res) => {
         text = "Following";
       }
     }
+    console.log("user being viewed###", viewedUsersPosts.map((p) => p.header))
+
+
+
     // console.log("follow obj!!! ", follow)
     res.render('profile.pug', {
       title: 'Profile Page',
       user: ourUser,
       userBeingViewed,
+      viewedUsersPosts,
       buttonClass,
       text,
       follow,

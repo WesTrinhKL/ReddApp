@@ -4,6 +4,7 @@ const followButtonEl = document.querySelector(".user-follow-btn")
   followButtonEl.addEventListener("click", async(e)=>{
     e.preventDefault();
     console.log("hello from follow button!");
+
     if(followButtonEl.value === "follow-button"){
       try {
         const followId = followButtonEl.id;

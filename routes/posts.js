@@ -48,32 +48,31 @@ router.get('/feed', asyncHandler(async (req, res) => {
         limit: 20,
         order:  [['updatedAt', 'DESC']],
     })
-
     //@Notes: if logged in, grab posts where user is following those people
     let allPostsThatUserIsFollowing;
-    // if(req.session.auth){
-    //     const getAllPeopleTheUserIsFollowing = await db.Follow.findAll({
-    //         where:{
-    //             followerUserID: req.session.auth.userId,
-    //         },
-    //         attributes: ['followBelongsToUserID'],
+    if(req.session.auth){
+        const getAllPeopleTheUserIsFollowing = await db.Follow.findAll({
+            where:{
+                followerUserID: req.session.auth.userId,
+            },
+            attributes: ['followBelongsToUserID'],
 
-    //     })
+        })
 
-    //     const arrayOfFollowingId = getAllPeopleTheUserIsFollowing.map((user)=>{
-    //         return user['followBelongsToUserID'];
-    //     })
+        const arrayOfFollowingId = getAllPeopleTheUserIsFollowing.map((user)=>{
+            return user['followBelongsToUserID'];
+        })
 
-    //     allPostsThatUserIsFollowing = await db.Post.findAll({
-    //         where:{
-    //             userId: arrayOfFollowingId
-    //         },
-    //         include: { model: db.User, as: 'user' },
-    //         limit: 20,
-    //         order:  [['updatedAt', 'DESC']],
-    //     })
-    //     console.log("all posts the user is following", allPostsThatUserIsFollowing);
-    // }
+        allPostsThatUserIsFollowing = await db.Post.findAll({
+            where:{
+                userId: arrayOfFollowingId
+            },
+            include: { model: db.User, as: 'user' },
+            limit: 20,
+            order:  [['updatedAt', 'DESC']],
+        })
+        console.log("all posts the user is following", allPostsThatUserIsFollowing);
+    }
 
     if (req.session.auth) {
         res.render('feed', {
@@ -108,12 +107,12 @@ router.get("/feed/:id(\\d+)", requireAuth, csrfProtection, asyncHandler(async (r
 
 // router.post("/feed//:id(\\d+)", csrfProtection, asyncHandler(async (req, res) => {
 //     console.log('white space')
-//     // const postId = parseInt(req.params.id, 10);
-//     // console.log(postId);
-//     // const post = await db.Post.findByPk(postId);
-//     // res.render("one-post"
-//     // post,
-//     // csrfToken: req.csrfToken(),
+//     const postId = parseInt(req.params.id, 10);
+//     console.log(postId);
+//     const post = await db.Post.findByPk(postId);
+//     res.render("one-post"
+//     post,
+//     csrfToken: req.csrfToken(),
 
 // }));
 
@@ -149,7 +148,6 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
             postId,
             userId,
             post,
-
             originalUser,
             allComments,
         })
@@ -160,6 +158,7 @@ router.get('/feed/:id(\\d+)/create-comment', requireAuth, asyncHandler(async (re
 }));
 
 router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(async (req, res) => {
+
     const {
         content,
         userId,
@@ -172,6 +171,11 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
         postId,
     });
 
+    const like = db.Like.build({
+        userId,
+        postId,
+    })
+
     const validationErrors = validationResult(req);
     if (validationErrors.isEmpty()) {
         await comment.save();
@@ -181,6 +185,7 @@ router.post('/feed/:id(\\d+)/create-comment', commentValidator, asyncHandler(asy
         res.render('create-comment', {
             title: 'user-comment',
             comment,
+            like,
             errors,
         })
     }

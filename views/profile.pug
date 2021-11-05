@@ -101,7 +101,7 @@ block content
         div.user-title #{userBeingViewed.username}'s Recent Posts
         hr.posts-hr
         ul
-          each post in currentUserPosts
+          each post in viewedUsersPosts
             div.post-outline
               div.post-header=post.header
               div.post-content=post.content

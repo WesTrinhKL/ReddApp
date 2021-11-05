@@ -4,14 +4,17 @@ include utils.pug
 block content
   div(class="comment-thread")
     div(class="comment" id=`post-${postId}`)
+      span(class="counter")
       div(class="comment-heading")
         div(class="comment-voting")
+
           button(type="button")
             span(aria-hidden="true") &#9650
             span(class="sr-only") Vote Up
           button(type="button")
             span(aria-hidden="true") &#9660
             span(class="sr-only") Vote Down
+
         div(class="comment-info")
           a(href="#" class="comment-author")=originalUser.username
           p(id=`time-${postId}` class="m-0") loading...
